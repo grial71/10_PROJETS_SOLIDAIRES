@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+        name="description"
+        content="Portal interactivo del proyecto Un Juguete, una Ilusión para Annobón."
+    />
+    <title>Proyecto Annobón | Un Juguete, una Ilusión</title>
+    <style>
+        :root {
+            --bg: #f7f2eb;
+            --surface: #ffffff;
+            --surface-2: #f2e8db;
+            --text: #22313f;
+            --muted: #6c757d;
+            --accent: #b75d2c;
+            --accent-2: #5f8f6b;
+            --border: #e8dfd4;
+            --shadow: 0 12px 30px rgba(34, 49, 63, 0.08);
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            color: var(--text);
+            background: linear-gradient(180deg, #fcf8f2 0%, var(--bg) 100%);
+            line-height: 1.6;
+        }
+
+        a { color: inherit; text-decoration: none; }
+        img { max-width: 100%; display: block; }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.94);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0.95rem 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .brand-mark {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            display: grid;
+            place-items: center;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.85rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            padding: 0.55rem 0.8rem;
+            border-radius: 999px;
+            color: var(--text);
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            background: var(--surface-2);
+            color: var(--accent);
+        }
+
+        .menu-toggle {
+            display: none;
+            border: 0;
+            background: var(--surface-2);
+            color: var(--text);
+            border-radius: 999px;
+            padding: 0.55rem 0.8rem;
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.2rem;
+        }
+
+        .hero {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1.3fr 0.7fr;
+            gap: 1.5rem;
+            margin-top: 1.2rem;
+        }
+
+        .hero h1 {
+            margin: 0 0 0.5rem;
+            font-size: clamp(1.7rem, 3vw, 2.5rem);
+            color: var(--accent);
+        }
+
+        .hero p { margin: 0.25rem 0; color: var(--muted); }
+
+        .hero-meta {
+            background: linear-gradient(135deg, var(--surface-2), #fffaf3);
+            border-radius: 18px;
+            padding: 1.2rem;
+            border: 1px solid var(--border);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.35rem 0.7rem;
+            background: rgba(183,93,44,0.14);
+            color: var(--accent);
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.7rem;
+        }
+
+        .progress-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 1.2rem;
+            box-shadow: var(--shadow);
+            margin-top: 1.2rem;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.6rem;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #eee4d8;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 68%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            border-radius: inherit;
+        }
+
+        .section {
+            margin-top: 1.4rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            box-shadow: var(--shadow);
+            padding: 1.3rem;
+        }
+
+        .section h2 {
+            margin-top: 0;
+            margin-bottom: 0.9rem;
+            font-size: 1.25rem;
+            color: var(--accent);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #fffaf4, #f8efe4);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            margin-top: 0.3rem;
+            font-size: 0.92rem;
+            color: var(--muted);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 1rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 24px rgba(34,49,63,0.08);
+        }
+
+        .card h3 { margin-top: 0; margin-bottom: 0.4rem; color: var(--text); }
+        .card p { margin: 0 0 0.7rem; color: var(--muted); font-size: 0.95rem; }
+        .card .link-btn {
+            display: inline-block;
+            padding: 0.45rem 0.7rem;
+            border-radius: 999px;
+            background: var(--surface-2);
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .card.disabled {
+            opacity: 0.8;
+            border-style: dashed;
+        }
+
+        .card.disabled .link-btn {
+            background: #f2efe9;
+            color: var(--muted);
+        }
+
+        .status-list, .timeline-list, .actions-list, .pending-list {
+            padding-left: 1rem;
+            color: var(--muted);
+        }
+
+        .status-list li, .timeline-list li, .actions-list li, .pending-list li {
+            margin-bottom: 0.65rem;
+        }
+
+        .status-legend {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.8rem;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 0.35rem;
+            vertical-align: middle;
+        }
+        .dot-ok { background: var(--accent-2); }
+        .dot-wip { background: #f2b84b; }
+        .dot-pending { background: #c94a4a; }
+
+        .timeline-list {
+            list-style: none;
+            padding-left: 0;
+            border-left: 2px solid var(--border);
+            margin-left: 0.3rem;
+        }
+        .timeline-list li {
+            position: relative;
+            padding-left: 1rem;
+            margin-bottom: 1rem;
+        }
+        .timeline-list li::before {
+            content: "";
+            position: absolute;
+            left: -0.35rem;
+            top: 0.55rem;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .gallery-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .gallery-item figcaption {
+            padding: 0.8rem;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        footer {
+            margin-top: 1.6rem;
+            padding: 1.2rem 1.2rem 2rem;
+            color: var(--muted);
+            font-size: 0.95rem;
+            text-align: center;
+        }
+
+        .back-to-top {
+            position: fixed;
+            right: 1rem;
+            bottom: 1rem;
+            display: none;
+            border: 0;
+            background: var(--accent);
+            color: white;
+            padding: 0.75rem 0.95rem;
+            border-radius: 999px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .back-to-top.show { display: inline-block; }
+
+        @media (max-width: 900px) {
+            .hero { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .cards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .gallery { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 680px) {
+            .nav-links { display: none; }
+            .menu-toggle { display: inline-block; }
+            .nav.open .nav-links {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+                padding-top: 0.6rem;
+            }
+            .stats-grid { grid-template-columns: 1fr; }
+            .cards-grid { grid-template-columns: 1fr; }
+            .gallery { grid-template-columns: 1fr; }
+            .container { padding: 0.9rem; }
+            .section, .hero { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="topbar" id="top">
+        <nav class="nav" aria-label="Navegación principal">
+            <div class="brand">
+                <div class="brand-mark">A</div>
+                <div>
+                    <div>Proyecto Annobón</div>
+                    <small>Un Juguete, una Ilusión</small>
+                </div>
+            </div>
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">Menú</button>
+            <div class="nav-links" id="navLinks">
+                <a href="#resumen">Resumen</a>
+                <a href="#indicadores">Indicadores</a>
+                <a href="#tarjetas">Navegación</a>
+                <a href="#estado">Estado</a>
+                <a href="#cronologia">Cronología</a>
+                <a href="#acciones">Próximas acciones</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="hero" id="encabezado">
+            <div>
+                <span class="badge">Candidatura en desarrollo</span>
+                <h1>Proyecto Annobón</h1>
+                <p>Programa integral de apoyo a la infancia, la educación y el desarrollo comunitario.</p>
+                <p>Portal de seguimiento del dossier “Un Juguete, una Ilusión” para la isla de Annobón.</p>
+            </div>
+            <div class="hero-meta">
+                <h3>Última actualización</h3>
+                <p><strong>12/07/2026</strong></p>
+                <p>Estado general: preparación documental y estructuración del dossier.</p>
+                <p>Enfoque: candidatura orientada al juego, la educación y la inclusión.</p>
+            </div>
+        </section>
+
+        <section class="progress-card" aria-label="Barra de progreso estimada">
+            <div class="progress-label">
+                <span>Avance del proyecto</span>
+                <span>Estimación interna: 68%</span>
+            </div>
+            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="68">
+                <div class="progress-fill"></div>
+            </div>
+            <p style="margin: 0.6rem 0 0; color: var(--muted); font-size: 0.95rem;">Esta barra refleja una estimación interna de avance documental y no sustituye un seguimiento oficial.</p>
+        </section>
+
+        <section class="section" id="resumen">
+            <h2>Resumen del proyecto</h2>
+            <p>
+                El proyecto “Un Juguete, una Ilusión” se presenta como una iniciativa educativa y comunitaria orientada a la infancia de Annobón.
+                El dossier reúne información de contexto, anexos, referencias, recursos visuales y documentos de seguimiento para apoyar la candidatura.
+            </p>
+            <p>
+                La propuesta pone el foco en el juego como herramienta de aprendizaje, en la participación de la comunidad y en la mejora de oportunidades para los niños y niñas de la isla.
+            </p>
+        </section>
+
+        <section class="section" id="indicadores">
+            <h2>Panel de indicadores</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">13</div>
+                    <div class="stat-label">Documentos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">6</div>
+                    <div class="stat-label">Anexos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">4</div>
+                    <div class="stat-label">Mapas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">6</div>
+                    <div class="stat-label">Fotografías</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">Referencias</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">68%</div>
+                    <div class="stat-label">Avance estimado</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="tarjetas">
+            <h2>Navegación por tarjetas</h2>
+            <div class="cards-grid">
+                <article class="card">
+                    <h3>📄 Candidatura</h3>
+                    <p>Documento central de presentación de la iniciativa.</p>
+                    <a class="link-btn" href="candidatura.html">Abrir</a>
+                </article>
+                <article class="card">
+                    <h3>📑 Anexos</h3>
+                    <p>Material complementario sobre contexto, educación y jornada.</p>
+                    <a class="link-btn" href="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/ANEXO_1_LOCALIZACION_ANNOBON.md">Abrir anexo</a>
+                </article>
+                <article class="card">
+                    <h3>🗺️ Mapas</h3>
+                    <p>Recursos cartográficos y visuales de la isla y de la región.</p>
+                    <a class="link-btn" href="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/IMAGENES/02_MAPAS/MAPA_01_AFRICA_GUINEA_ECUATORIAL.png">Abrir mapa</a>
+                </article>
+                <article class="card">
+                    <h3>📸 Fotografías</h3>
+                    <p>Material fotográfico de Annobón y de la propuesta.</p>
+                    <a class="link-btn" href="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/IMAGENES/03_FOTOGRAFIAS/FOTO_01_VISTA_PANORAMICA_ANNOBON.png">Abrir fotografía</a>
+                </article>
+                <article class="card">
+                    <h3>📚 Referencias</h3>
+                    <p>Documentos de apoyo sobre geografía, educación e infancia.</p>
+                    <a class="link-btn" href="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/REFERENCIAS/01_GEOGRAFIA/REFERENCIA_01_GEOGRAFIA_ANNOBON.md">Abrir referencia</a>
+                </article>
+                <article class="card">
+                    <h3>📋 Checklist</h3>
+                    <p>Lista de verificación para la finalización del dossier.</p>
+                    <a class="link-btn" href="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/99_CHECKLIST_FINAL.md">Abrir</a>
+                </article>
+                <article class="card disabled">
+                    <h3>📦 Exportaciones</h3>
+                    <p>Versión final preparada para envío o publicación.</p>
+                    <span class="link-btn">Página HTML en preparación</span>
+                </article>
+                <article class="card">
+                    <h3>⚙ Documentación interna</h3>
+                    <p>Guías de organización y seguimiento del proyecto.</p>
+                    <a class="link-btn" href="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/README.md">Abrir</a>
+                </article>
+            </div>
+        </section>
+
+        <section class="section" id="estado">
+            <h2>Estado del proyecto</h2>
+            <div class="status-legend">
+                <span><span class="dot dot-ok"></span>Terminadas</span>
+                <span><span class="dot dot-wip"></span>En curso</span>
+                <span><span class="dot dot-pending"></span>Por realizar</span>
+            </div>
+            <ul class="status-list">
+                <li><span class="dot dot-ok"></span> Estructura documental del dossier consolidada.</li>
+                <li><span class="dot dot-ok"></span> Documentos principales y anexos preparados.</li>
+                <li><span class="dot dot-wip"></span> Revisión de la candidatura y refinamiento del contenido.</li>
+                <li><span class="dot dot-wip"></span> Integración de documentos de referencia y recursos visuales.</li>
+                <li><span class="dot dot-pending"></span> Confirmación de datos definitivos sobre la organización colaboradora y beneficiarios.</li>
+                <li><span class="dot dot-pending"></span> Preparación de una versión final de presentación.</li>
+            </ul>
+        </section>
+
+        <section class="section" id="cronologia">
+            <h2>Cronología</h2>
+            <ul class="timeline-list">
+                <li><strong>Inicio de la preparación</strong><br />Constitución de la base documental y del dossier de candidatura.</li>
+                <li><strong>Desarrollo del contenido</strong><br />Elaboración del proyecto, objetivos, anexos y contexto local.</li>
+                <li><strong>Organización de recursos</strong><br />Integración de referencias, mapas y archivos fotográficos.</li>
+                <li><strong>Seguimiento documental</strong><br />Creación de listas de verificación y documentos de auditoría.</li>
+                <li><strong>Próxima fase</strong><br />Finalización de la candidatura y preparación del envío.</li>
+            </ul>
+        </section>
+
+        <section class="section" id="acciones">
+            <h2>Próximas acciones</h2>
+            <ul class="actions-list">
+                <li>Completar la información definitiva sobre la organización colaboradora.</li>
+                <li>Confirmar el número de beneficiarios y las edades objetivo.</li>
+                <li>Revisar la coherencia del dossier con las bases de la convocatoria.</li>
+                <li>Preparar una versión final de presentación en formato claro y homogéneo.</li>
+                <li>Integrar los recursos visuales definitivos si se disponen de nuevas imágenes.</li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>Información pendiente</h2>
+            <ul class="pending-list">
+                <li>Nombre definitivo de la organización o entidad colaboradora.</li>
+                <li>Número definitivo de beneficiarios y detalle de los grupos de edad.</li>
+                <li>Responsables de la coordinación local y de la ejecución.</li>
+                <li>Información complementaria sobre la logística de la jornada.</li>
+                <li>Versión final de los documentos de apoyo y de las imágenes.</li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>Cobertura visual</h2>
+            <div class="gallery">
+                <figure class="gallery-item">
+                    <img src="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/IMAGENES/01_PORTADA/PORTADA_OFICIAL_V1.png" alt="Portada oficial del proyecto" />
+                    <figcaption>Portada oficial del proyecto.</figcaption>
+                </figure>
+                <figure class="gallery-item">
+                    <img src="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/IMAGENES/02_MAPAS/MAPA_03_ISLA_DE_ANNOBON.png" alt="Mapa de la isla de Annobón" />
+                    <figcaption>Mapa de la isla de Annobón.</figcaption>
+                </figure>
+                <figure class="gallery-item">
+                    <img src="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/IMAGENES/03_FOTOGRAFIAS/FOTO_02_SAN_ANTONIO_DE_PALE.png" alt="Vista de San Antonio de Palé" />
+                    <figcaption>Vista de San Antonio de Palé.</figcaption>
+                </figure>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p><strong>Proyecto Annobón</strong> — Candidatura “Un Juguete, una Ilusión”</p>
+        <p>Versión actual: 1.0</p>
+        <p>Última actualización: 12/07/2026</p>
+    </footer>
+
+    <button class="back-to-top" id="backToTop" aria-label="Volver arriba">↑ Volver arriba</button>
+
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const nav = document.querySelector('.nav');
+        const backToTop = document.getElementById('backToTop');
+
+        if (menuToggle && nav) {
+            menuToggle.addEventListener('click', () => {
+                nav.classList.toggle('open');
+            });
+        }
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 280) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Página web de los anexos del proyecto Un Juguete, una Ilusión para Annobón." />
+    <title>Anexos | Un Juguete, una Ilusión</title>
+    <style>
+        :root {
+            --bg: #f7f2eb;
+            --surface: #ffffff;
+            --surface-2: #f2e8db;
+            --text: #22313f;
+            --muted: #6c757d;
+            --accent: #b75d2c;
+            --accent-2: #5f8f6b;
+            --border: #e8dfd4;
+            --shadow: 0 12px 30px rgba(34, 49, 63, 0.08);
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            color: var(--text);
+            background: linear-gradient(180deg, #fcf8f2 0%, var(--bg) 100%);
+            line-height: 1.6;
+        }
+
+        a { color: inherit; text-decoration: none; }
+        img { max-width: 100%; display: block; }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.94);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 0.95rem 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .brand-mark {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            display: grid;
+            place-items: center;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            padding: 0.55rem 0.8rem;
+            border-radius: 999px;
+            color: var(--text);
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            background: var(--surface-2);
+            color: var(--accent);
+        }
+
+        .menu-toggle {
+            display: none;
+            border: 0;
+            background: var(--surface-2);
+            color: var(--text);
+            border-radius: 999px;
+            padding: 0.55rem 0.8rem;
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 1.2rem;
+        }
+
+        .hero {
+            margin-top: 1.2rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            min-height: 360px;
+        }
+
+        .hero-copy {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-copy h1 {
+            margin: 0 0 0.6rem;
+            color: var(--accent);
+            font-size: clamp(1.7rem, 3.2vw, 2.5rem);
+        }
+
+        .hero-copy p { margin: 0.25rem 0; color: var(--muted); }
+
+        .hero-image {
+            background: linear-gradient(135deg, rgba(183,93,44,0.16), rgba(95,143,107,0.16));
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.35rem 0.7rem;
+            background: rgba(183,93,44,0.14);
+            color: var(--accent);
+            border-radius: 999px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            width: fit-content;
+        }
+
+        .section {
+            margin-top: 1.3rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            box-shadow: var(--shadow);
+            padding: 1.2rem 1.25rem;
+        }
+
+        .section h2 {
+            margin: 0 0 0.75rem;
+            font-size: 1.2rem;
+            color: var(--accent);
+        }
+
+        .section p, .section li { color: var(--muted); }
+
+        .toc {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.65rem;
+            margin-top: 0.7rem;
+        }
+
+        .toc a {
+            display: inline-block;
+            padding: 0.5rem 0.75rem;
+            border-radius: 999px;
+            background: var(--surface-2);
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .annex-card {
+            display: grid;
+            grid-template-columns: 0.8fr 1.2fr;
+            gap: 1rem;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: linear-gradient(135deg, #fffaf4, #f8efe4);
+            margin-top: 1rem;
+        }
+
+        .annex-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+        }
+
+        .annex-card h3 {
+            margin: 0 0 0.35rem;
+            color: var(--text);
+        }
+
+        .annex-card p { margin: 0.25rem 0; }
+
+        .label {
+            display: inline-block;
+            margin-bottom: 0.45rem;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .pending {
+            border-left: 4px solid var(--accent);
+            padding: 0.95rem 1rem;
+            border-radius: 0 14px 14px 0;
+            background: #fffaf5;
+            margin-top: 0.9rem;
+        }
+
+        .pending strong { color: var(--accent); }
+
+        footer {
+            margin: 1.6rem 0 2.2rem;
+            padding: 1.2rem 1.2rem 0;
+            color: var(--muted);
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        .back-to-top {
+            position: fixed;
+            right: 1rem;
+            bottom: 1rem;
+            display: none;
+            border: 0;
+            background: var(--accent);
+            color: white;
+            padding: 0.75rem 0.95rem;
+            border-radius: 999px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .back-to-top.show { display: inline-block; }
+
+        @media (max-width: 900px) {
+            .hero-grid { grid-template-columns: 1fr; }
+            .annex-card { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 680px) {
+            .nav-links { display: none; }
+            .menu-toggle { display: inline-block; }
+            .nav.open .nav-links {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+                padding-top: 0.6rem;
+            }
+            .container { padding: 0.9rem; }
+            .section { padding: 1rem; }
+            .hero-copy { padding: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="topbar" id="top">
+        <nav class="nav" aria-label="Navegación principal">
+            <div class="brand">
+                <div class="brand-mark">A</div>
+                <div>
+                    <div>Proyecto Annobón</div>
+                    <small>Un Juguete, una Ilusión</small>
+                </div>
+            </div>
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">Menú</button>
+            <div class="nav-links" id="navLinks">
+                <a href="./index.html">Volver al inicio</a>
+                <a href="./candidatura.html">Candidatura</a>
+                <a href="#anexo1">Anexo 1</a>
+                <a href="#anexo2">Anexo 2</a>
+                <a href="#anexo3">Anexo 3</a>
+                <a href="#anexo4">Anexo 4</a>
+                <a href="#anexo5">Anexo 5</a>
+                <a href="#anexo6">Anexo 6</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="hero" id="inicio">
+            <div class="hero-grid">
+                <div class="hero-copy">
+                    <span class="badge">Material de apoyo</span>
+                    <h1>Anexos del proyecto</h1>
+                    <p>Esta página reúne, de forma web y clara, los anexos de apoyo que acompañan la candidatura “Un Juguete, una Ilusión” para Annobón.</p>
+                    <p>Los anexos aportan contexto geográfico, educativo, social y visual para comprender mejor la propuesta.</p>
+                </div>
+                <div class="hero-image">
+                    <img src="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/IMAGENES/02_MAPAS/MAPA_03_ISLA_DE_ANNOBON.png" alt="Mapa de la isla de Annobón" />
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Sommaire interno</h2>
+            <div class="toc">
+                <a href="#anexo1">Anexo 1</a>
+                <a href="#anexo2">Anexo 2</a>
+                <a href="#anexo3">Anexo 3</a>
+                <a href="#anexo4">Anexo 4</a>
+                <a href="#anexo5">Anexo 5</a>
+                <a href="#anexo6">Anexo 6</a>
+            </div>
+        </section>
+
+        <section class="section" id="anexo1">
+            <h2>Anexo 1 — Localización geográfica de Annobón</h2>
+            <div class="annex-card">
+                <img src="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/IMAGENES/02_MAPAS/MAPA_01_AFRICA_GUINEA_ECUATORIAL.png" alt="Mapa de África y Guinea Ecuatorial" />
+                <div>
+                    <span class="label">Objetivo</span>
+                    <p>Situar geográficamente la isla de Annobón y facilitar la comprensión del contexto territorial del proyecto.</p>
+                    <span class="label">Resumen</span>
+                    <p>Annobón es una isla volcánica situada en el océano Atlántico, en la República de Guinea Ecuatorial. Su localización condiciona el acceso a recursos y servicios, y refuerza la importancia de las iniciativas educativas y solidarias dirigidas a la infancia.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="anexo2">
+            <h2>Anexo 2 — Ficha general de Annobón</h2>
+            <div class="annex-card">
+                <img src="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/IMAGENES/02_MAPAS/MAPA_03_ISLA_DE_ANNOBON.png" alt="Mapa general de la isla de Annobón" />
+                <div>
+                    <span class="label">Objetivo</span>
+                    <p>Ofrecer una visión general de la isla, su identidad territorial y su contexto de intervención.</p>
+                    <span class="label">Resumen</span>
+                    <p>La ficha presenta el marco general de Annobón como territorio insular, con una identidad comunitaria fuerte y un contexto de aislamiento geográfico que exige una atención sensible y adaptada.</p>
+                    <div class="pending">
+                        <strong>Pendiente de confirmación:</strong> datos demográficos y sociales más recientes que deberán incorporarse en una versión definitiva.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="anexo3">
+            <h2>Anexo 3 — El juego como herramienta educativa</h2>
+            <div class="annex-card">
+                <img src="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/IMAGENES/03_FOTOGRAFIAS/FOTO_01_VISTA_PANORAMICA_ANNOBON.png" alt="Vista panorámica de Annobón" />
+                <div>
+                    <span class="label">Objetivo</span>
+                    <p>Explicar por qué el juego puede convertirse en un recurso pedagógico central en la propuesta.</p>
+                    <span class="label">Resumen</span>
+                    <p>El anexo destaca el papel del juego en el desarrollo infantil y muestra cómo los juguetes pueden favorecer la creatividad, la imaginación, la coordinación, la comunicación y el trabajo en equipo.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="anexo4">
+            <h2>Anexo 4 — Tipología de los juguetes recomendados</h2>
+            <div class="annex-card">
+                <img src="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/IMAGENES/03_FOTOGRAFIAS/FOTO_04_INFANCIA_DE_ANNOBON.png" alt="Fotografía relacionada con la infancia en Annobón" />
+                <div>
+                    <span class="label">Objetivo</span>
+                    <p>Presentar las categorías de juguetes recomendadas para apoyar el aprendizaje y el desarrollo integral.</p>
+                    <span class="label">Resumen</span>
+                    <p>El anexo reúne propuestas como juegos de construcción, juegos de lógica, materiales artísticos, deportivos y musicales, con un enfoque pedagógico y adaptado a la infancia.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="anexo5">
+            <h2>Anexo 5 — Programa orientativo de una jornada educativa</h2>
+            <div class="annex-card">
+                <img src="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/IMAGENES/03_FOTOGRAFIAS/FOTO_05_COMUNIDAD_DE_ANNOBON.jpeg" alt="Fotografía de la comunidad de Annobón" />
+                <div>
+                    <span class="label">Objetivo</span>
+                    <p>Illustrar una propuesta de organización para una jornada educativa vinculada a la entrega de juguetes.</p>
+                    <span class="label">Resumen</span>
+                    <p>El anexo describe una programación orientativa con recepción, actividades lúdicas, entrega organizada de material, fotografía de grupo y clausura, con un enfoque participativo y comunitario.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="anexo6">
+            <h2>Anexo 6 — Galería fotográfica</h2>
+            <div class="annex-card">
+                <img src="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/IMAGENES/03_FOTOGRAFIAS/FOTO_01_VISTA_PANORAMICA_ANNOBON.png" alt="Vista panorámica de Annobón" />
+                <div>
+                    <span class="label">Objetivo</span>
+                    <p>Apoyar la candidatura con imágenes de contexto que ayuden a comprender la isla y la propuesta.</p>
+                    <span class="label">Resumen</span>
+                    <p>Este anexo visual aporta elementos de contexto territorial y comunitario, reforzando la comprensión del entorno en el que se desarrollará la iniciativa.</p>
+                    <div class="pending">
+                        <strong>Pendiente de confirmación:</strong> imágenes adicionales o versiones definitivas de la documentación visual.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p><strong>Proyecto Annobón</strong> — Anexos de la candidatura “Un Juguete, una Ilusión”</p>
+        <p><a href="./index.html">Volver al inicio</a> · <a href="./candidatura.html">Ir a la candidatura</a></p>
+    </footer>
+
+    <button class="back-to-top" id="backToTop" aria-label="Volver arriba">↑ Volver arriba</button>
+
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const nav = document.querySelector('.nav');
+        const backToTop = document.getElementById('backToTop');
+
+        if (menuToggle && nav) {
+            menuToggle.addEventListener('click', () => {
+                nav.classList.toggle('open');
+            });
+        }
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 260) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Candidatura web del proyecto Un Juguete, una Ilusión para Annobón." />
+    <title>Un Juguete, una Ilusión | Candidatura</title>
+    <style>
+        :root {
+            --bg: #f7f2eb;
+            --surface: #ffffff;
+            --surface-2: #f2e8db;
+            --text: #22313f;
+            --muted: #6c757d;
+            --accent: #b75d2c;
+            --accent-2: #5f8f6b;
+            --border: #e8dfd4;
+            --shadow: 0 12px 30px rgba(34, 49, 63, 0.08);
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            color: var(--text);
+            background: linear-gradient(180deg, #fcf8f2 0%, var(--bg) 100%);
+            line-height: 1.6;
+        }
+
+        a { color: inherit; text-decoration: none; }
+        img { max-width: 100%; display: block; }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.94);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 0.95rem 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .brand-mark {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            display: grid;
+            place-items: center;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            padding: 0.55rem 0.8rem;
+            border-radius: 999px;
+            color: var(--text);
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            background: var(--surface-2);
+            color: var(--accent);
+        }
+
+        .menu-toggle {
+            display: none;
+            border: 0;
+            background: var(--surface-2);
+            color: var(--text);
+            border-radius: 999px;
+            padding: 0.55rem 0.8rem;
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 1.2rem;
+        }
+
+        .hero {
+            margin-top: 1.2rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            min-height: 380px;
+        }
+
+        .hero-copy {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-copy h1 {
+            margin: 0 0 0.7rem;
+            color: var(--accent);
+            font-size: clamp(1.7rem, 3.3vw, 2.6rem);
+        }
+
+        .hero-copy p { margin: 0.3rem 0; color: var(--muted); }
+
+        .hero-image {
+            background: linear-gradient(135deg, rgba(183,93,44,0.18), rgba(95,143,107,0.18));
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.35rem 0.7rem;
+            background: rgba(183,93,44,0.14);
+            color: var(--accent);
+            border-radius: 999px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            width: fit-content;
+        }
+
+        .section {
+            margin-top: 1.3rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            box-shadow: var(--shadow);
+            padding: 1.25rem 1.3rem;
+        }
+
+        .section h2 {
+            margin-top: 0;
+            margin-bottom: 0.8rem;
+            font-size: 1.22rem;
+            color: var(--accent);
+        }
+
+        .section p, .section li {
+            color: var(--muted);
+        }
+
+        .summary-box {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+            margin-top: 0.8rem;
+        }
+
+        .summary-card {
+            background: linear-gradient(135deg, #fffaf4, #f8efe4);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1rem;
+        }
+
+        .summary-card h3 {
+            margin: 0 0 0.35rem;
+            font-size: 1rem;
+            color: var(--text);
+        }
+
+        .summary-card p { margin: 0; font-size: 0.95rem; }
+
+        .toc {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.65rem;
+            margin-top: 0.8rem;
+        }
+
+        .toc a {
+            display: inline-block;
+            padding: 0.5rem 0.75rem;
+            border-radius: 999px;
+            background: var(--surface-2);
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .highlight {
+            padding: 1rem 1.1rem;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(183,93,44,0.1), rgba(95,143,107,0.1));
+            border: 1px solid var(--border);
+            margin-top: 0.8rem;
+        }
+
+        .pending {
+            border-left: 4px solid var(--accent);
+            padding: 0.95rem 1rem;
+            border-radius: 0 14px 14px 0;
+            background: #fffaf5;
+            margin-top: 0.8rem;
+        }
+
+        .pending strong { color: var(--accent); }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .card-list {
+            padding-left: 1rem;
+            margin: 0.3rem 0 0;
+        }
+
+        .card-list li { margin-bottom: 0.5rem; }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem;
+            margin-top: 0.9rem;
+        }
+
+        .gallery figure {
+            margin: 0;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+        }
+
+        .gallery figcaption {
+            padding: 0.8rem;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        footer {
+            margin: 1.6rem 0 2.2rem;
+            padding: 1.2rem 1.2rem 0;
+            color: var(--muted);
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        .back-to-top {
+            position: fixed;
+            right: 1rem;
+            bottom: 1rem;
+            display: none;
+            border: 0;
+            background: var(--accent);
+            color: white;
+            padding: 0.75rem 0.95rem;
+            border-radius: 999px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .back-to-top.show { display: inline-block; }
+
+        @media (max-width: 900px) {
+            .hero-grid { grid-template-columns: 1fr; }
+            .summary-box { grid-template-columns: 1fr 1fr; }
+            .grid-2 { grid-template-columns: 1fr; }
+            .gallery { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 680px) {
+            .nav-links { display: none; }
+            .menu-toggle { display: inline-block; }
+            .nav.open .nav-links {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+                padding-top: 0.6rem;
+            }
+            .summary-box { grid-template-columns: 1fr; }
+            .container { padding: 0.9rem; }
+            .section { padding: 1rem; }
+            .hero-copy { padding: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="topbar" id="top">
+        <nav class="nav" aria-label="Navegación principal">
+            <div class="brand">
+                <div class="brand-mark">A</div>
+                <div>
+                    <div>Proyecto Annobón</div>
+                    <small>Un Juguete, una Ilusión</small>
+                </div>
+            </div>
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">Menú</button>
+            <div class="nav-links" id="navLinks">
+                <a href="./index.html">Volver al inicio</a>
+                <a href="#resumen">Resumen</a>
+                <a href="#presentacion">Presentación</a>
+                <a href="#annobon">Annobón</a>
+                <a href="#objetivos">Objetivos</a>
+                <a href="#pendiente">Pendiente</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="hero" id="inicio">
+            <div class="hero-grid">
+                <div class="hero-copy">
+                    <span class="badge">Candidatura educativa</span>
+                    <h1>Un Juguete, una Ilusión</h1>
+                    <p>Una propuesta orientada a favorecer el desarrollo integral de la infancia de Annobón mediante el juego, la educación y la participación comunitaria.</p>
+                    <p>Esta página presenta la candidatura de forma clara y accesible para personas, instituciones y partners que quieran conocer el proyecto.</p>
+                </div>
+                <div class="hero-image">
+                    <img src="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/IMAGENES/01_PORTADA/PORTADA_OFICIAL_V1.png" alt="Portada del proyecto Un Juguete, una Ilusión" />
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="resumen">
+            <h2>Resumen ejecutivo</h2>
+            <div class="summary-box">
+                <div class="summary-card">
+                    <h3>Lugar</h3>
+                    <p>Annobón, República de Guinea Ecuatorial.</p>
+                </div>
+                <div class="summary-card">
+                    <h3>Finalidad</h3>
+                    <p>Contribuir al desarrollo integral de los niños y niñas mediante el juego como herramienta educativa.</p>
+                </div>
+                <div class="summary-card">
+                    <h3>Apoyo solicitado</h3>
+                    <p>Juguetes educativos y materiales de apoyo orientados al aprendizaje y la creatividad.</p>
+                </div>
+                <div class="summary-card">
+                    <h3>Enfoque</h3>
+                    <p>Educación, inclusión, creatividad, solidaridad y trabajo en equipo.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Sommaire interno</h2>
+            <div class="toc">
+                <a href="#presentacion">Presentación del proyecto</a>
+                <a href="#annobon">Annobón: contexto y justificación</a>
+                <a href="#objetivos">Objetivos del proyecto</a>
+                <a href="#metodologia">Metodología educativa</a>
+                <a href="#vision">Nuestra visión</a>
+                <a href="#compromiso">Nuestro compromiso</a>
+                <a href="#beneficiarios">Beneficiarios</a>
+                <a href="#tipologia">Tipología de los juguetes</a>
+                <a href="#organizacion">Organización y distribución</a>
+                <a href="#impacto">Impacto y seguimiento</a>
+                <a href="#pendiente">Pendiente de confirmación</a>
+            </div>
+        </section>
+
+        <section class="section" id="presentacion">
+            <h2>Presentación del proyecto</h2>
+            <p>El presente proyecto tiene como finalidad solicitar la colaboración de la campaña “Un Juguete, una Ilusión” para desarrollar una iniciativa educativa destinada a los niños y niñas de la isla de Annobón.</p>
+            <p>La propuesta parte de una idea sencilla pero esencial: el juego constituye una herramienta poderosa para el aprendizaje, la creatividad y el desarrollo personal. Los juguetes solicitados no se consideran únicamente como recursos recreativos, sino como instrumentos educativos capaces de favorecer la imaginación, la convivencia y el crecimiento integral de los menores.</p>
+            <div class="highlight">
+                <strong>Mensaje central:</strong> cada juguete entregado puede convertirse en una oportunidad de aprendizaje y de construcción de futuro.
+            </div>
+        </section>
+
+        <section class="section" id="annobon">
+            <h2>Annobón: contexto y justificación</h2>
+            <div class="grid-2">
+                <div>
+                    <p>Annobón es la provincia insular más meridional de la República de Guinea Ecuatorial. Su condición insular y su ubicación en el océano Atlántico hacen que el acceso a recursos educativos, culturales y recreativos resulte más complejo que en otras regiones.</p>
+                    <p>Por esta razón, cada iniciativa de cooperación puede tener un impacto especialmente significativo para la infancia local. El proyecto busca aportar oportunidades concretas de aprendizaje y desarrollo en un contexto donde el juego puede desempeñar un papel especialmente valioso.</p>
+                </div>
+                <div>
+                    <img src="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/IMAGENES/02_MAPAS/MAPA_03_ISLA_DE_ANNOBON.png" alt="Mapa de la isla de Annobón" style="border-radius: 16px; border: 1px solid var(--border);" />
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="objetivos">
+            <h2>Objetivos del proyecto</h2>
+            <ul class="card-list">
+                <li>Contribuir al desarrollo integral de los niños y niñas de Annobón mediante el juego como herramienta educativa.</li>
+                <li>Favorecer el desarrollo cognitivo, la imaginación, la creatividad y el pensamiento lógico.</li>
+                <li>Reforzar la autoestima, la confianza y las habilidades sociales de los menores.</li>
+                <li>Promover valores de respeto, cooperación, solidaridad e inclusión.</li>
+            </ul>
+        </section>
+
+        <section class="section" id="metodologia">
+            <h2>Metodología educativa</h2>
+            <p>La propuesta no se limita a la entrega de juguetes. El proyecto contempla la organización de actividades lúdicas y educativas que permitan transformar el material recibido en experiencias de aprendizaje compartido.</p>
+            <p>Las actividades pueden incluir juegos cooperativos, juegos de construcción, talleres creativos, actividades artísticas, juegos de lógica y dinámicas de trabajo en equipo. La participación de las familias, los docentes y la comunidad permitirá reforzar el valor educativo del proyecto.</p>
+        </section>
+
+        <section class="section" id="vision">
+            <h2>Nuestra visión</h2>
+            <p>Creemos que todos los niños merecen crecer rodeados de oportunidades para aprender, descubrir y desarrollar plenamente sus capacidades. El juego constituye uno de los instrumentos educativos más eficaces durante la infancia, y por ello la iniciativa pretende crear espacios donde la experiencia lúdica se convierta en una oportunidad real de desarrollo.</p>
+        </section>
+
+        <section class="section" id="compromiso">
+            <h2>Nuestro compromiso</h2>
+            <p>La iniciativa se desarrolla con responsabilidad, transparencia y respeto hacia la infancia. Se prevé una distribución organizada, un uso educativo del material, una adecuada documentación de las actividades y una comunicación clara con los actores involucrados.</p>
+        </section>
+
+        <section class="section" id="beneficiarios">
+            <h2>Beneficiarios</h2>
+            <p>El proyecto está dirigido prioritariamente a los niños y niñas residentes en la isla de Annobón. La información definitiva relativa al número de beneficiarios, grupos de edad y organización de las actividades será incorporada una vez confirmada por las personas y entidades responsables.</p>
+            <div class="pending">
+                <strong>Pendiente de confirmación:</strong> número definitivo de beneficiarios, grupos de edad y organización de la participación.
+            </div>
+        </section>
+
+        <section class="section" id="tipologia">
+            <h2>Tipología de los juguetes solicitados</h2>
+            <ul class="card-list">
+                <li>Juegos de construcción.</li>
+                <li>Juegos de lógica.</li>
+                <li>Juegos de mesa educativos.</li>
+                <li>Material creativo y artístico.</li>
+                <li>Material deportivo infantil.</li>
+                <li>Juegos musicales.</li>
+                <li>Juegos cooperativos.</li>
+            </ul>
+        </section>
+
+        <section class="section" id="organizacion">
+            <h2>Organización y distribución</h2>
+            <p>La distribución de los juguetes se planteará de forma ordenada y transparente, en coordinación con los responsables locales y la comunidad. La propuesta considera una jornada educativa y comunitaria que permita desarrollar actividades lúdicas antes, durante y después de la entrega del material.</p>
+        </section>
+
+        <section class="section" id="impacto">
+            <h2>Impacto esperado y seguimiento</h2>
+            <p>El proyecto pretende generar beneficios que perduren más allá del día de la distribución. Se espera estimular la creatividad, reforzar la autoestima, favorecer el aprendizaje mediante el juego, impulsar habilidades sociales y fortalecer la participación de las familias y de la comunidad.</p>
+            <p>La gestión se orientará hacia la transparencia, la documentación de las actividades y la elaboración de una memoria final, respetando siempre la dignidad y la privacidad de los menores.</p>
+        </section>
+
+        <section class="section" id="pendiente">
+            <h2>Pendiente de confirmación</h2>
+            <div class="pending">
+                <strong>Pendiente de confirmación:</strong> identidad definitiva de la entidad o estructura colaboradora, responsables locales y modalidades concretas de coordinación.
+            </div>
+            <p>Estas informaciones se mantendrán visibles de forma clara para garantizar una presentación transparente y ajustada a la realidad del proyecto.</p>
+            <div class="gallery">
+                <figure>
+                    <img src="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/IMAGENES/03_FOTOGRAFIAS/FOTO_01_VISTA_PANORAMICA_ANNOBON.png" alt="Vista panorámica de Annobón" />
+                    <figcaption>Vista panorámica de Annobón.</figcaption>
+                </figure>
+                <figure>
+                    <img src="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/IMAGENES/02_MAPAS/MAPA_03_ISLA_DE_ANNOBON.png" alt="Mapa de Annobón" />
+                    <figcaption>Mapa de Annobón.</figcaption>
+                </figure>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p><strong>Proyecto Annobón</strong> — Un Juguete, una Ilusión</p>
+        <p><a href="./index.html">Volver al inicio</a></p>
+    </footer>
+
+    <button class="back-to-top" id="backToTop" aria-label="Volver arriba">↑ Volver arriba</button>
+
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const nav = document.querySelector('.nav');
+        const backToTop = document.getElementById('backToTop');
+
+        if (menuToggle && nav) {
+            menuToggle.addEventListener('click', () => {
+                nav.classList.toggle('open');
+            });
+        }
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 260) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
