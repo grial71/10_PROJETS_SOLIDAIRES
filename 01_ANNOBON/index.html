@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" dir="ltr">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <meta
         name="description"
-        content="Portal interactivo del proyecto Un Juguete, una Ilusión para Annobón."
-    />
+        content="Portal institucional del Proyecto Annobón y de la candidatura Un Juguete, una Ilusión."
+    >
+
     <title>Proyecto Annobón | Un Juguete, una Ilusión</title>
-    <link rel="stylesheet" href="assets/css/style.css" />
+
     <style>
         :root {
             --bg: #f7f2eb;
@@ -17,37 +20,74 @@
             --text: #22313f;
             --muted: #6c757d;
             --accent: #b75d2c;
+            --accent-dark: #93451f;
             --accent-2: #5f8f6b;
             --border: #e8dfd4;
+            --danger: #c94a4a;
+            --warning: #e1a83b;
             --shadow: 0 12px 30px rgba(34, 49, 63, 0.08);
         }
 
-        * { box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             margin: 0;
             font-family: "Segoe UI", Roboto, Arial, sans-serif;
             color: var(--text);
-            background: linear-gradient(180deg, #fcf8f2 0%, var(--bg) 100%);
+            background:
+                linear-gradient(
+                    180deg,
+                    #fcf8f2 0%,
+                    var(--bg) 100%
+                );
             line-height: 1.6;
         }
 
-        a { color: inherit; text-decoration: none; }
-        img { max-width: 100%; display: block; }
+        body[dir="rtl"] {
+            font-family: Arial, Tahoma, sans-serif;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        button,
+        select {
+            font: inherit;
+        }
+
+        button:focus-visible,
+        a:focus-visible,
+        select:focus-visible {
+            outline: 3px solid rgba(183, 93, 44, 0.35);
+            outline-offset: 3px;
+        }
 
         .topbar {
             position: sticky;
             top: 0;
             z-index: 1000;
-            background: rgba(255,255,255,0.94);
-            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border);
         }
 
         .nav {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0.95rem 1.2rem;
+            padding: 0.85rem 1.2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -58,33 +98,56 @@
             display: flex;
             align-items: center;
             gap: 0.8rem;
+            min-width: 220px;
             font-weight: 700;
             color: var(--accent);
         }
 
         .brand-mark {
-            width: 42px;
-            height: 42px;
+            width: 44px;
+            height: 44px;
+            flex: 0 0 44px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--accent),
+                    var(--accent-2)
+                );
             display: grid;
             place-items: center;
-            color: white;
-            font-size: 1rem;
+            color: #ffffff;
+            font-size: 1.05rem;
+            box-shadow: var(--shadow);
+        }
+
+        .brand small {
+            display: block;
+            color: var(--muted);
+            font-weight: 500;
+            font-size: 0.75rem;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
 
         .nav-links {
             display: flex;
-            gap: 0.85rem;
             align-items: center;
+            gap: 0.35rem;
             flex-wrap: wrap;
         }
 
         .nav-links a {
-            padding: 0.55rem 0.8rem;
+            padding: 0.5rem 0.7rem;
             border-radius: 999px;
             color: var(--text);
-            transition: background 0.2s ease, color 0.2s ease;
+            transition:
+                background 0.2s ease,
+                color 0.2s ease;
         }
 
         .nav-links a:hover {
@@ -92,115 +155,37 @@
             color: var(--accent);
         }
 
+        .language-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .language-select {
+            min-width: 145px;
+            padding: 0.58rem 2rem 0.58rem 0.8rem;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            color: var(--text);
+            background-color: var(--surface);
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(34, 49, 63, 0.06);
+        }
+
+        body[dir="rtl"] .language-select {
+            padding:
+                0.58rem 0.8rem
+                0.58rem 2rem;
+        }
+
         .menu-toggle {
             display: none;
-            border: 0;
+            border: 1px solid var(--border);
             background: var(--surface-2);
             color: var(--text);
             border-radius: 999px;
-            padding: 0.55rem 0.8rem;
+            padding: 0.58rem 0.9rem;
             cursor: pointer;
-        }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 0.7rem;
-        }
-
-        .lang-switcher {
-            position: relative;
-        }
-
-        .lang-toggle {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            border: 1px solid var(--border);
-            background: var(--surface);
-            color: var(--text);
-            border-radius: 999px;
-            padding: 0.5rem 0.75rem;
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(34, 49, 63, 0.05);
-        }
-
-        .lang-toggle:hover,
-        .lang-toggle:focus-visible {
-            border-color: var(--accent);
-            outline: none;
-        }
-
-        .lang-caret {
-            font-size: 0.8rem;
-            color: var(--muted);
-        }
-
-        .lang-menu {
-            position: absolute;
-            top: calc(100% + 0.45rem);
-            right: 0;
-            min-width: 180px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            box-shadow: var(--shadow);
-            padding: 0.35rem;
-            display: none;
-            flex-direction: column;
-            z-index: 1002;
-        }
-
-        .lang-menu.is-open {
-            display: flex;
-        }
-
-        .lang-option {
-            border: 0;
-            background: transparent;
-            text-align: left;
-            padding: 0.6rem 0.7rem;
-            border-radius: 10px;
-            color: var(--text);
-            cursor: pointer;
-            font: inherit;
-        }
-
-        .lang-option:hover,
-        .lang-option:focus-visible {
-            background: var(--surface-2);
-            color: var(--accent);
-            outline: none;
-        }
-
-        .lang-option.is-active {
-            background: rgba(183, 93, 44, 0.12);
-            color: var(--accent);
-            font-weight: 700;
-        }
-
-        .lang-feedback {
-            position: fixed;
-            right: 1rem;
-            bottom: 4.4rem;
-            background: rgba(34, 49, 63, 0.94);
-            color: white;
-            padding: 0.7rem 0.9rem;
-            border-radius: 999px;
-            font-size: 0.92rem;
-            box-shadow: var(--shadow);
-            opacity: 0;
-            transform: translateY(6px);
-            pointer-events: none;
-            transition: opacity 0.2s ease, transform 0.2s ease;
-            z-index: 1003;
-        }
-
-        .lang-feedback.is-visible {
-            opacity: 1;
-            transform: translateY(0);
         }
 
         .container {
@@ -210,592 +195,2050 @@
         }
 
         .hero {
+            margin-top: 1.2rem;
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 1.5rem;
+            align-items: stretch;
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 24px;
             box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .hero-content {
             padding: 2rem;
-            display: grid;
-            grid-template-columns: 1.3fr 0.7fr;
-            gap: 1.5rem;
-            margin-top: 1.2rem;
         }
 
-        .hero h1 {
-            margin: 0 0 0.5rem;
-            font-size: clamp(1.7rem, 3vw, 2.5rem);
-            color: var(--accent);
+        .hero-image {
+            min-height: 350px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .hero p { margin: 0.25rem 0; color: var(--muted); }
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            min-height: 350px;
+            object-fit: cover;
+        }
 
-        .hero-meta {
-            background: linear-gradient(135deg, var(--surface-2), #fffaf3);
-            border-radius: 18px;
-            padding: 1.2rem;
-            border: 1px solid var(--border);
+        .hero-image::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(34, 49, 63, 0.08),
+                    transparent
+                );
         }
 
         .badge {
             display: inline-block;
-            padding: 0.35rem 0.7rem;
-            background: rgba(183,93,44,0.14);
-            color: var(--accent);
+            margin-bottom: 0.8rem;
+            padding: 0.38rem 0.75rem;
             border-radius: 999px;
+            color: var(--accent);
+            background: rgba(183, 93, 44, 0.13);
             font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 0.7rem;
+            font-weight: 700;
         }
 
-        .progress-card {
+        .hero h1 {
+            margin: 0 0 0.7rem;
+            color: var(--accent);
+            font-size: clamp(2rem, 4vw, 3.4rem);
+            line-height: 1.15;
+        }
+
+        .hero p {
+            margin: 0.4rem 0;
+            color: var(--muted);
+            font-size: 1.02rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            margin-top: 1.4rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            min-height: 44px;
+            padding: 0.65rem 1rem;
+            border: 0;
+            border-radius: 999px;
+            cursor: pointer;
+            font-weight: 700;
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            color: #ffffff;
+            background: var(--accent);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-dark);
+        }
+
+        .btn-secondary {
+            color: var(--accent);
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+        }
+
+        .progress-card,
+        .section {
+            margin-top: 1.4rem;
+            padding: 1.3rem;
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 1.2rem;
+            border-radius: 22px;
             box-shadow: var(--shadow);
-            margin-top: 1.2rem;
         }
 
         .progress-label {
             display: flex;
             justify-content: space-between;
+            gap: 1rem;
             margin-bottom: 0.6rem;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .progress-bar {
-            height: 10px;
-            background: #eee4d8;
-            border-radius: 999px;
+            height: 11px;
             overflow: hidden;
+            border-radius: 999px;
+            background: #eee4d8;
         }
 
         .progress-fill {
-            height: 100%;
             width: 68%;
-            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            height: 100%;
             border-radius: inherit;
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--accent),
+                    var(--accent-2)
+                );
         }
 
-        .section {
-            margin-top: 1.4rem;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 22px;
-            box-shadow: var(--shadow);
-            padding: 1.3rem;
+        .progress-note {
+            margin: 0.65rem 0 0;
+            color: var(--muted);
+            font-size: 0.92rem;
         }
 
         .section h2 {
             margin-top: 0;
             margin-bottom: 0.9rem;
-            font-size: 1.25rem;
             color: var(--accent);
+            font-size: 1.35rem;
         }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(6, minmax(0, 1fr));
+            grid-template-columns:
+                repeat(6, minmax(0, 1fr));
             gap: 1rem;
         }
 
         .stat-card {
-            background: linear-gradient(135deg, #fffaf4, #f8efe4);
-            border: 1px solid var(--border);
-            border-radius: 16px;
             padding: 1rem;
             text-align: center;
+            background:
+                linear-gradient(
+                    135deg,
+                    #fffaf4,
+                    #f8efe4
+                );
+            border: 1px solid var(--border);
+            border-radius: 16px;
         }
 
         .stat-value {
-            font-size: 1.35rem;
-            font-weight: 700;
             color: var(--accent);
+            font-size: 1.45rem;
+            font-weight: 800;
         }
 
         .stat-label {
             margin-top: 0.3rem;
-            font-size: 0.92rem;
             color: var(--muted);
+            font-size: 0.9rem;
         }
 
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
             gap: 1rem;
         }
 
         .card {
+            padding: 1rem;
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 18px;
-            padding: 1rem;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
         }
 
         .card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 24px rgba(34,49,63,0.08);
+            transform: translateY(-4px);
+            box-shadow:
+                0 12px 26px
+                rgba(34, 49, 63, 0.09);
         }
 
-        .card h3 { margin-top: 0; margin-bottom: 0.4rem; color: var(--text); }
-        .card p { margin: 0 0 0.7rem; color: var(--muted); font-size: 0.95rem; }
-        .card .link-btn {
-            display: inline-block;
-            padding: 0.45rem 0.7rem;
+        .card h3 {
+            margin-top: 0;
+            margin-bottom: 0.4rem;
+        }
+
+        .card p {
+            margin: 0 0 0.8rem;
+            color: var(--muted);
+            font-size: 0.94rem;
+        }
+
+        .link-btn {
+            display: inline-flex;
+            align-items: center;
+            min-height: 40px;
+            padding: 0.48rem 0.75rem;
             border-radius: 999px;
-            background: var(--surface-2);
             color: var(--accent);
-            font-weight: 600;
-            font-size: 0.9rem;
+            background: var(--surface-2);
+            font-size: 0.88rem;
+            font-weight: 700;
         }
 
         .card.disabled {
-            opacity: 0.8;
+            opacity: 0.72;
             border-style: dashed;
         }
 
-        .card.disabled .link-btn {
-            background: #f2efe9;
+        .status-list,
+        .timeline-list,
+        .actions-list,
+        .pending-list {
+            padding-left: 1.2rem;
             color: var(--muted);
         }
 
-        .status-list, .timeline-list, .actions-list, .pending-list {
-            padding-left: 1rem;
-            color: var(--muted);
+        body[dir="rtl"] .status-list,
+        body[dir="rtl"] .timeline-list,
+        body[dir="rtl"] .actions-list,
+        body[dir="rtl"] .pending-list {
+            padding-left: 0;
+            padding-right: 1.2rem;
         }
 
-        .status-list li, .timeline-list li, .actions-list li, .pending-list li {
+        .status-list li,
+        .actions-list li,
+        .pending-list li {
             margin-bottom: 0.65rem;
         }
 
         .status-legend {
             display: flex;
-            gap: 1rem;
             flex-wrap: wrap;
+            gap: 1rem;
             margin-bottom: 0.8rem;
             color: var(--muted);
-            font-size: 0.95rem;
         }
 
         .dot {
             display: inline-block;
             width: 10px;
             height: 10px;
-            border-radius: 50%;
             margin-right: 0.35rem;
+            border-radius: 50%;
             vertical-align: middle;
         }
-        .dot-ok { background: var(--accent-2); }
-        .dot-wip { background: #f2b84b; }
-        .dot-pending { background: #c94a4a; }
+
+        body[dir="rtl"] .dot {
+            margin-right: 0;
+            margin-left: 0.35rem;
+        }
+
+        .dot-ok {
+            background: var(--accent-2);
+        }
+
+        .dot-wip {
+            background: var(--warning);
+        }
+
+        .dot-pending {
+            background: var(--danger);
+        }
 
         .timeline-list {
             list-style: none;
+            margin-left: 0.3rem;
             padding-left: 0;
             border-left: 2px solid var(--border);
-            margin-left: 0.3rem;
         }
+
+        body[dir="rtl"] .timeline-list {
+            margin-left: 0;
+            margin-right: 0.3rem;
+            border-left: 0;
+            border-right: 2px solid var(--border);
+        }
+
         .timeline-list li {
             position: relative;
-            padding-left: 1rem;
             margin-bottom: 1rem;
+            padding-left: 1rem;
         }
+
+        body[dir="rtl"] .timeline-list li {
+            padding-left: 0;
+            padding-right: 1rem;
+        }
+
         .timeline-list li::before {
             content: "";
             position: absolute;
-            left: -0.35rem;
             top: 0.55rem;
+            left: -0.35rem;
             width: 10px;
             height: 10px;
             border-radius: 50%;
             background: var(--accent);
         }
 
+        body[dir="rtl"] .timeline-list li::before {
+            left: auto;
+            right: -0.35rem;
+        }
+
         .gallery {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
             gap: 1rem;
             margin-top: 1rem;
         }
 
         .gallery-item {
+            margin: 0;
+            overflow: hidden;
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 16px;
-            overflow: hidden;
             box-shadow: var(--shadow);
         }
 
         .gallery-item img {
             width: 100%;
-            height: 220px;
+            height: 230px;
             object-fit: cover;
         }
 
         .gallery-item figcaption {
             padding: 0.8rem;
             color: var(--muted);
-            font-size: 0.95rem;
+            font-size: 0.93rem;
+        }
+
+        .translation-toast {
+            position: fixed;
+            top: 88px;
+            left: 50%;
+            z-index: 2000;
+            max-width: calc(100% - 2rem);
+            padding: 0.75rem 1rem;
+            color: #ffffff;
+            background: var(--text);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            pointer-events: none;
+            transform:
+                translate(-50%, -15px);
+            transition:
+                opacity 0.25s ease,
+                transform 0.25s ease;
+        }
+
+        .translation-toast.show {
+            opacity: 1;
+            transform:
+                translate(-50%, 0);
         }
 
         footer {
             margin-top: 1.6rem;
-            padding: 1.2rem 1.2rem 2rem;
+            padding: 1.3rem 1.2rem 2rem;
             color: var(--muted);
-            font-size: 0.95rem;
             text-align: center;
+            font-size: 0.93rem;
         }
 
         .back-to-top {
             position: fixed;
             right: 1rem;
             bottom: 1rem;
+            z-index: 1001;
             display: none;
             border: 0;
-            background: var(--accent);
-            color: white;
-            padding: 0.75rem 0.95rem;
             border-radius: 999px;
+            padding: 0.75rem 1rem;
+            color: #ffffff;
+            background: var(--accent);
             box-shadow: var(--shadow);
             cursor: pointer;
-            z-index: 1001;
         }
 
-        .back-to-top.show { display: inline-block; }
+        body[dir="rtl"] .back-to-top {
+            right: auto;
+            left: 1rem;
+        }
 
-        @media (max-width: 900px) {
-            .hero { grid-template-columns: 1fr; }
-            .stats-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-            .cards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-            .gallery { grid-template-columns: 1fr 1fr; }
+        .back-to-top.show {
+            display: inline-block;
+        }
+
+        @media (max-width: 1050px) {
+            .nav {
+                align-items: flex-start;
+                flex-wrap: wrap;
+            }
+
+            .nav-right {
+                flex-wrap: wrap;
+                justify-content: flex-end;
+            }
+
+            .stats-grid {
+                grid-template-columns:
+                    repeat(3, minmax(0, 1fr));
+            }
+
+            .cards-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 800px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-image {
+                min-height: 260px;
+            }
+
+            .hero-image img {
+                min-height: 260px;
+            }
+
+            .gallery {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
         }
 
         @media (max-width: 680px) {
-            .nav-links { display: none; }
-            .menu-toggle { display: inline-block; }
+            .nav {
+                align-items: center;
+            }
+
+            .nav-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .menu-toggle {
+                display: inline-block;
+            }
+
+            .nav-links {
+                display: none;
+                width: 100%;
+                padding-top: 0.7rem;
+                flex-direction: column;
+                align-items: stretch;
+            }
+
             .nav.open .nav-links {
                 display: flex;
+            }
+
+            .nav-links a {
+                width: 100%;
+                padding: 0.7rem 0.8rem;
+                background: var(--surface-2);
+            }
+
+            .language-wrapper {
+                margin-left: auto;
+            }
+
+            body[dir="rtl"] .language-wrapper {
+                margin-left: 0;
+                margin-right: auto;
+            }
+
+            .language-select {
+                min-width: 130px;
+            }
+
+            .container {
+                padding: 0.9rem;
+            }
+
+            .hero-content,
+            .section,
+            .progress-card {
+                padding: 1rem;
+            }
+
+            .stats-grid,
+            .cards-grid,
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .progress-label {
                 flex-direction: column;
-                align-items: flex-start;
-                width: 100%;
-                padding-top: 0.6rem;
+                gap: 0.2rem;
             }
-            .nav.open .nav-actions {
-                display: flex;
-                width: 100%;
-                justify-content: flex-start;
-                padding-top: 0.3rem;
+
+            .brand {
+                min-width: auto;
             }
-            .stats-grid { grid-template-columns: 1fr; }
-            .cards-grid { grid-template-columns: 1fr; }
-            .gallery { grid-template-columns: 1fr; }
-            .container { padding: 0.9rem; }
-            .section, .hero { padding: 1rem; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
         }
     </style>
 </head>
+
 <body>
     <header class="topbar" id="top">
         <nav class="nav" aria-label="Navegación principal">
+
             <div class="brand">
                 <div class="brand-mark">A</div>
+
                 <div>
-                    <div>Proyecto Annobón</div>
-                    <small>Un Juguete, una Ilusión</small>
-                </div>
-            </div>
-            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">Menú</button>
-            <div class="nav-links" id="navLinks">
-                <a href="#resumen">Resumen</a>
-                <a href="#indicadores">Indicadores</a>
-                <a href="#tarjetas">Navegación</a>
-                <a href="#estado">Estado</a>
-                <a href="#cronologia">Cronología</a>
-                <a href="#acciones">Próximas acciones</a>
-            </div>
-            <div class="nav-actions">
-                <div class="lang-switcher">
-                    <button class="lang-toggle" id="langToggle" type="button" aria-expanded="false" aria-controls="langMenu">
-                        <span class="lang-current" id="langCurrent">Español</span>
-                        <span class="lang-caret" aria-hidden="true">▾</span>
-                    </button>
-                    <div class="lang-menu" id="langMenu" role="menu" aria-label="Selector de idioma">
-                        <button class="lang-option is-active" type="button" role="menuitemradio" aria-checked="true" data-lang="Español" data-message="">Español</button>
-                        <button class="lang-option" type="button" role="menuitemradio" aria-checked="false" data-lang="Français" data-message="Versión francesa en preparación">Français</button>
-                        <button class="lang-option" type="button" role="menuitemradio" aria-checked="false" data-lang="English" data-message="English version in preparation">English</button>
-                        <button class="lang-option" type="button" role="menuitemradio" aria-checked="false" data-lang="العربية" data-message="النسخة العربية قيد الإعداد">العربية</button>
+                    <div data-i18n="brandTitle">
+                        Proyecto Annobón
                     </div>
+
+                    <small data-i18n="brandSubtitle">
+                        Un Juguete, una Ilusión
+                    </small>
                 </div>
+            </div>
+
+            <div class="nav-right">
+
+                <button
+                    class="menu-toggle"
+                    id="menuToggle"
+                    type="button"
+                    aria-label="Abrir menú"
+                    aria-expanded="false"
+                    data-i18n="menuButton"
+                >
+                    Menú
+                </button>
+
+                <div class="nav-links" id="navLinks">
+                    <a
+                        href="#resumen"
+                        data-i18n="navSummary"
+                    >
+                        Resumen
+                    </a>
+
+                    <a
+                        href="#indicadores"
+                        data-i18n="navIndicators"
+                    >
+                        Indicadores
+                    </a>
+
+                    <a
+                        href="#tarjetas"
+                        data-i18n="navNavigation"
+                    >
+                        Navegación
+                    </a>
+
+                    <a
+                        href="#estado"
+                        data-i18n="navStatus"
+                    >
+                        Estado
+                    </a>
+
+                    <a
+                        href="#cronologia"
+                        data-i18n="navTimeline"
+                    >
+                        Cronología
+                    </a>
+
+                    <a
+                        href="#acciones"
+                        data-i18n="navActions"
+                    >
+                        Próximas acciones
+                    </a>
+                </div>
+
+                <div class="language-wrapper">
+                    <label
+                        for="languageSelect"
+                        class="sr-only"
+                        style="
+                            position:absolute;
+                            width:1px;
+                            height:1px;
+                            padding:0;
+                            margin:-1px;
+                            overflow:hidden;
+                            clip:rect(0,0,0,0);
+                            white-space:nowrap;
+                            border:0;
+                        "
+                    >
+                        Idioma
+                    </label>
+
+                    <select
+                        id="languageSelect"
+                        class="language-select"
+                        aria-label="Seleccionar idioma"
+                    >
+                        <option value="es">
+                            🇪🇸 Español
+                        </option>
+
+                        <option value="fr">
+                            🇫🇷 Français
+                        </option>
+
+                        <option value="en">
+                            🇬🇧 English
+                        </option>
+
+                        <option value="ar">
+                            العربية
+                        </option>
+                    </select>
+                </div>
+
             </div>
         </nav>
     </header>
 
     <main class="container">
+
         <section class="hero" id="encabezado">
-            <div>
-                <span class="badge">Candidatura en desarrollo</span>
-                <h1>Proyecto Annobón</h1>
-                <p>Programa integral de apoyo a la infancia, la educación y el desarrollo comunitario.</p>
-                <p>Portal de seguimiento del dossier “Un Juguete, una Ilusión” para la isla de Annobón.</p>
+
+            <div class="hero-content">
+
+                <span
+                    class="badge"
+                    data-i18n="heroBadge"
+                >
+                    Candidatura en desarrollo
+                </span>
+
+                <h1 data-i18n="heroTitle">
+                    Proyecto Annobón
+                </h1>
+
+                <p data-i18n="heroText1">
+                    Programa integral de apoyo a la infancia,
+                    la educación y el desarrollo comunitario.
+                </p>
+
+                <p data-i18n="heroText2">
+                    Portal de seguimiento del dossier
+                    «Un Juguete, una Ilusión» para la isla
+                    de Annobón.
+                </p>
+
+                <div class="hero-actions">
+
+                    <a
+                        class="btn btn-primary"
+                        href="candidatura.html"
+                        data-i18n="openApplication"
+                    >
+                        Abrir candidatura
+                    </a>
+
+                    <a
+                        class="btn btn-secondary"
+                        href="anexos.html"
+                        data-i18n="openAnnexes"
+                    >
+                        Ver anexos
+                    </a>
+
+                </div>
             </div>
-            <div class="hero-meta">
-                <h3>Última actualización</h3>
-                <p><strong>12/07/2026</strong></p>
-                <p>Estado general: preparación documental y estructuración del dossier.</p>
-                <p>Enfoque: candidatura orientada al juego, la educación y la inclusión.</p>
+
+            <div class="hero-image">
+                <img
+                    src="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/IMAGENES/03_FOTOGRAFIAS/FOTO_01_VISTA_PANORAMICA_ANNOBON.png"
+                    alt="Vista panorámica de la isla de Annobón"
+                >
             </div>
+
         </section>
 
-        <section class="progress-card" aria-label="Barra de progreso estimada">
+        <section
+            class="progress-card"
+            aria-label="Barra de progreso estimada"
+        >
             <div class="progress-label">
-                <span>Avance del proyecto</span>
-                <span>Estimación interna: 68%</span>
+
+                <span data-i18n="progressTitle">
+                    Avance del proyecto
+                </span>
+
+                <span data-i18n="progressValue">
+                    Estimación interna: 68 %
+                </span>
+
             </div>
-            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="68">
+
+            <div
+                class="progress-bar"
+                role="progressbar"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow="68"
+            >
                 <div class="progress-fill"></div>
             </div>
-            <p style="margin: 0.6rem 0 0; color: var(--muted); font-size: 0.95rem;">Esta barra refleja una estimación interna de avance documental y no sustituye un seguimiento oficial.</p>
+
+            <p
+                class="progress-note"
+                data-i18n="progressNote"
+            >
+                Esta barra refleja una estimación interna
+                de avance documental y no sustituye un
+                seguimiento oficial.
+            </p>
         </section>
 
         <section class="section" id="resumen">
-            <h2>Resumen del proyecto</h2>
-            <p>
-                El proyecto “Un Juguete, una Ilusión” se presenta como una iniciativa educativa y comunitaria orientada a la infancia de Annobón.
-                El dossier reúne información de contexto, anexos, referencias, recursos visuales y documentos de seguimiento para apoyar la candidatura.
+
+            <h2 data-i18n="summaryTitle">
+                Resumen del proyecto
+            </h2>
+
+            <p data-i18n="summaryText1">
+                El proyecto «Un Juguete, una Ilusión»
+                se presenta como una iniciativa educativa
+                y comunitaria orientada a la infancia
+                de Annobón.
             </p>
-            <p>
-                La propuesta pone el foco en el juego como herramienta de aprendizaje, en la participación de la comunidad y en la mejora de oportunidades para los niños y niñas de la isla.
+
+            <p data-i18n="summaryText2">
+                El dossier reúne información de contexto,
+                anexos, referencias, recursos visuales
+                y documentos de seguimiento para apoyar
+                la candidatura.
             </p>
+
+            <p data-i18n="summaryText3">
+                La propuesta pone el foco en el juego
+                como herramienta de aprendizaje, en la
+                participación de la comunidad y en la
+                mejora de oportunidades para los niños
+                y niñas de la isla.
+            </p>
+
         </section>
 
         <section class="section" id="indicadores">
-            <h2>Panel de indicadores</h2>
+
+            <h2 data-i18n="indicatorsTitle">
+                Panel de indicadores
+            </h2>
+
             <div class="stats-grid">
+
                 <div class="stat-card">
                     <div class="stat-value">13</div>
-                    <div class="stat-label">Documentos</div>
+                    <div
+                        class="stat-label"
+                        data-i18n="documents"
+                    >
+                        Documentos
+                    </div>
                 </div>
+
                 <div class="stat-card">
                     <div class="stat-value">6</div>
-                    <div class="stat-label">Anexos</div>
+                    <div
+                        class="stat-label"
+                        data-i18n="annexes"
+                    >
+                        Anexos
+                    </div>
                 </div>
+
                 <div class="stat-card">
                     <div class="stat-value">4</div>
-                    <div class="stat-label">Mapas</div>
+                    <div
+                        class="stat-label"
+                        data-i18n="maps"
+                    >
+                        Mapas
+                    </div>
                 </div>
+
                 <div class="stat-card">
                     <div class="stat-value">6</div>
-                    <div class="stat-label">Fotografías</div>
+                    <div
+                        class="stat-label"
+                        data-i18n="photos"
+                    >
+                        Fotografías
+                    </div>
                 </div>
+
                 <div class="stat-card">
                     <div class="stat-value">3</div>
-                    <div class="stat-label">Referencias</div>
+                    <div
+                        class="stat-label"
+                        data-i18n="references"
+                    >
+                        Referencias
+                    </div>
                 </div>
+
                 <div class="stat-card">
-                    <div class="stat-value">68%</div>
-                    <div class="stat-label">Avance estimado</div>
+                    <div class="stat-value">68 %</div>
+                    <div
+                        class="stat-label"
+                        data-i18n="estimatedProgress"
+                    >
+                        Avance estimado
+                    </div>
                 </div>
+
             </div>
         </section>
 
         <section class="section" id="tarjetas">
-            <h2>Navegación por tarjetas</h2>
+
+            <h2 data-i18n="cardsTitle">
+                Navegación principal
+            </h2>
+
             <div class="cards-grid">
+
                 <article class="card">
-                    <h3>📄 Candidatura</h3>
-                    <p>Documento central de presentación de la iniciativa.</p>
-                    <a class="link-btn" href="candidatura.html">Abrir</a>
+                    <h3 data-i18n="cardApplicationTitle">
+                        📄 Candidatura
+                    </h3>
+
+                    <p data-i18n="cardApplicationText">
+                        Documento central de presentación
+                        de la iniciativa.
+                    </p>
+
+                    <a
+                        class="link-btn"
+                        href="candidatura.html"
+                        data-i18n="open"
+                    >
+                        Abrir
+                    </a>
                 </article>
+
                 <article class="card">
-                    <h3>📑 Anexos</h3>
-                    <p>Material complementario sobre contexto, educación y jornada.</p>
-                    <a class="link-btn" href="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/ANEXO_1_LOCALIZACION_ANNOBON.md">Abrir anexo</a>
+                    <h3 data-i18n="cardAnnexesTitle">
+                        📑 Anexos
+                    </h3>
+
+                    <p data-i18n="cardAnnexesText">
+                        Material complementario sobre
+                        contexto, educación y jornada.
+                    </p>
+
+                    <a
+                        class="link-btn"
+                        href="anexos.html"
+                        data-i18n="open"
+                    >
+                        Abrir
+                    </a>
                 </article>
+
                 <article class="card">
-                    <h3>🗺️ Mapas</h3>
-                    <p>Recursos cartográficos y visuales de la isla y de la región.</p>
-                    <a class="link-btn" href="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/IMAGENES/02_MAPAS/MAPA_01_AFRICA_GUINEA_ECUATORIAL.png">Abrir mapa</a>
+                    <h3 data-i18n="cardMapsTitle">
+                        🗺️ Mapas
+                    </h3>
+
+                    <p data-i18n="cardMapsText">
+                        Recursos cartográficos y visuales
+                        de la isla y de la región.
+                    </p>
+
+                    <a
+                        class="link-btn"
+                        href="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/IMAGENES/02_MAPAS/MAPA_01_AFRICA_GUINEA_ECUATORIAL.png"
+                        data-i18n="openMap"
+                    >
+                        Abrir mapa
+                    </a>
                 </article>
+
                 <article class="card">
-                    <h3>📸 Fotografías</h3>
-                    <p>Material fotográfico de Annobón y de la propuesta.</p>
-                    <a class="link-btn" href="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/IMAGENES/03_FOTOGRAFIAS/FOTO_01_VISTA_PANORAMICA_ANNOBON.png">Abrir fotografía</a>
+                    <h3 data-i18n="cardPhotosTitle">
+                        📸 Fotografías
+                    </h3>
+
+                    <p data-i18n="cardPhotosText">
+                        Material fotográfico de Annobón
+                        y de la propuesta.
+                    </p>
+
+                    <a
+                        class="link-btn"
+                        href="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/IMAGENES/03_FOTOGRAFIAS/FOTO_01_VISTA_PANORAMICA_ANNOBON.png"
+                        data-i18n="openPhoto"
+                    >
+                        Abrir fotografía
+                    </a>
                 </article>
+
                 <article class="card">
-                    <h3>📚 Referencias</h3>
-                    <p>Documentos de apoyo sobre geografía, educación e infancia.</p>
-                    <a class="link-btn" href="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/REFERENCIAS/01_GEOGRAFIA/REFERENCIA_01_GEOGRAFIA_ANNOBON.md">Abrir referencia</a>
+                    <h3 data-i18n="cardReferencesTitle">
+                        📚 Referencias
+                    </h3>
+
+                    <p data-i18n="cardReferencesText">
+                        Documentos de apoyo sobre
+                        geografía, educación e infancia.
+                    </p>
+
+                    <span
+                        class="link-btn"
+                        data-i18n="pageInPreparation"
+                    >
+                        Página en preparación
+                    </span>
                 </article>
+
                 <article class="card">
-                    <h3>📋 Checklist</h3>
-                    <p>Lista de verificación para la finalización del dossier.</p>
-                    <a class="link-btn" href="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/99_CHECKLIST_FINAL.md">Abrir</a>
+                    <h3 data-i18n="cardProjectTitle">
+                        🌍 Proyecto Annobón
+                    </h3>
+
+                    <p data-i18n="cardProjectText">
+                        Visión general de los programas
+                        educativos y solidarios.
+                    </p>
+
+                    <span
+                        class="link-btn"
+                        data-i18n="pageInPreparation"
+                    >
+                        Página en preparación
+                    </span>
                 </article>
+
                 <article class="card disabled">
-                    <h3>📦 Exportaciones</h3>
-                    <p>Versión final preparada para envío o publicación.</p>
-                    <span class="link-btn">Página HTML en preparación</span>
+                    <h3 data-i18n="cardExportsTitle">
+                        📦 Exportaciones
+                    </h3>
+
+                    <p data-i18n="cardExportsText">
+                        Versiones finales preparadas
+                        para presentación o envío.
+                    </p>
+
+                    <span
+                        class="link-btn"
+                        data-i18n="pageInPreparation"
+                    >
+                        Página en preparación
+                    </span>
                 </article>
+
                 <article class="card">
-                    <h3>⚙ Documentación interna</h3>
-                    <p>Guías de organización y seguimiento del proyecto.</p>
-                    <a class="link-btn" href="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/README.md">Abrir</a>
+                    <h3 data-i18n="cardPartnersTitle">
+                        🤝 Colaboración
+                    </h3>
+
+                    <p data-i18n="cardPartnersText">
+                        Información para ONG, fundaciones
+                        y posibles entidades colaboradoras.
+                    </p>
+
+                    <span
+                        class="link-btn"
+                        data-i18n="pageInPreparation"
+                    >
+                        Página en preparación
+                    </span>
                 </article>
+
             </div>
         </section>
 
         <section class="section" id="estado">
-            <h2>Estado del proyecto</h2>
+
+            <h2 data-i18n="statusTitle">
+                Estado del proyecto
+            </h2>
+
             <div class="status-legend">
-                <span><span class="dot dot-ok"></span>Terminadas</span>
-                <span><span class="dot dot-wip"></span>En curso</span>
-                <span><span class="dot dot-pending"></span>Por realizar</span>
+
+                <span>
+                    <span class="dot dot-ok"></span>
+                    <span data-i18n="completed">
+                        Terminadas
+                    </span>
+                </span>
+
+                <span>
+                    <span class="dot dot-wip"></span>
+                    <span data-i18n="inProgress">
+                        En curso
+                    </span>
+                </span>
+
+                <span>
+                    <span class="dot dot-pending"></span>
+                    <span data-i18n="toDo">
+                        Por realizar
+                    </span>
+                </span>
+
             </div>
+
             <ul class="status-list">
-                <li><span class="dot dot-ok"></span> Estructura documental del dossier consolidada.</li>
-                <li><span class="dot dot-ok"></span> Documentos principales y anexos preparados.</li>
-                <li><span class="dot dot-wip"></span> Revisión de la candidatura y refinamiento del contenido.</li>
-                <li><span class="dot dot-wip"></span> Integración de documentos de referencia y recursos visuales.</li>
-                <li><span class="dot dot-pending"></span> Confirmación de datos definitivos sobre la organización colaboradora y beneficiarios.</li>
-                <li><span class="dot dot-pending"></span> Preparación de una versión final de presentación.</li>
+
+                <li data-i18n="statusItem1">
+                    Estructura documental del dossier
+                    consolidada.
+                </li>
+
+                <li data-i18n="statusItem2">
+                    Documentos principales y anexos
+                    preparados.
+                </li>
+
+                <li data-i18n="statusItem3">
+                    Revisión de la candidatura y
+                    refinamiento del contenido.
+                </li>
+
+                <li data-i18n="statusItem4">
+                    Integración de referencias y recursos
+                    visuales.
+                </li>
+
+                <li data-i18n="statusItem5">
+                    Confirmación de datos definitivos
+                    sobre beneficiarios y colaboración.
+                </li>
+
+                <li data-i18n="statusItem6">
+                    Preparación de las versiones finales
+                    de presentación.
+                </li>
+
             </ul>
         </section>
 
         <section class="section" id="cronologia">
-            <h2>Cronología</h2>
+
+            <h2 data-i18n="timelineTitle">
+                Cronología
+            </h2>
+
             <ul class="timeline-list">
-                <li><strong>Inicio de la preparación</strong><br />Constitución de la base documental y del dossier de candidatura.</li>
-                <li><strong>Desarrollo del contenido</strong><br />Elaboración del proyecto, objetivos, anexos y contexto local.</li>
-                <li><strong>Organización de recursos</strong><br />Integración de referencias, mapas y archivos fotográficos.</li>
-                <li><strong>Seguimiento documental</strong><br />Creación de listas de verificación y documentos de auditoría.</li>
-                <li><strong>Próxima fase</strong><br />Finalización de la candidatura y preparación del envío.</li>
+
+                <li>
+                    <strong data-i18n="timelineStep1Title">
+                        Inicio de la preparación
+                    </strong>
+
+                    <br>
+
+                    <span data-i18n="timelineStep1Text">
+                        Constitución de la base documental
+                        y del dossier.
+                    </span>
+                </li>
+
+                <li>
+                    <strong data-i18n="timelineStep2Title">
+                        Desarrollo del contenido
+                    </strong>
+
+                    <br>
+
+                    <span data-i18n="timelineStep2Text">
+                        Elaboración del proyecto,
+                        objetivos, anexos y contexto local.
+                    </span>
+                </li>
+
+                <li>
+                    <strong data-i18n="timelineStep3Title">
+                        Organización de recursos
+                    </strong>
+
+                    <br>
+
+                    <span data-i18n="timelineStep3Text">
+                        Integración de referencias,
+                        mapas y fotografías.
+                    </span>
+                </li>
+
+                <li>
+                    <strong data-i18n="timelineStep4Title">
+                        Seguimiento documental
+                    </strong>
+
+                    <br>
+
+                    <span data-i18n="timelineStep4Text">
+                        Creación de controles de calidad,
+                        revisión y auditoría.
+                    </span>
+                </li>
+
+                <li>
+                    <strong data-i18n="timelineStep5Title">
+                        Próxima fase
+                    </strong>
+
+                    <br>
+
+                    <span data-i18n="timelineStep5Text">
+                        Finalización de la candidatura
+                        y preparación del envío.
+                    </span>
+                </li>
+
             </ul>
         </section>
 
         <section class="section" id="acciones">
-            <h2>Próximas acciones</h2>
+
+            <h2 data-i18n="actionsTitle">
+                Próximas acciones
+            </h2>
+
             <ul class="actions-list">
-                <li>Completar la información definitiva sobre la organización colaboradora.</li>
-                <li>Confirmar el número de beneficiarios y las edades objetivo.</li>
-                <li>Revisar la coherencia del dossier con las bases de la convocatoria.</li>
-                <li>Preparar una versión final de presentación en formato claro y homogéneo.</li>
-                <li>Integrar los recursos visuales definitivos si se disponen de nuevas imágenes.</li>
+
+                <li data-i18n="action1">
+                    Completar la información sobre
+                    la entidad colaboradora.
+                </li>
+
+                <li data-i18n="action2">
+                    Confirmar el número de beneficiarios
+                    y las edades objetivo.
+                </li>
+
+                <li data-i18n="action3">
+                    Revisar la coherencia del dossier con
+                    las bases de la convocatoria.
+                </li>
+
+                <li data-i18n="action4">
+                    Preparar la versión final de
+                    presentación.
+                </li>
+
+                <li data-i18n="action5">
+                    Incorporar los recursos visuales
+                    definitivos.
+                </li>
+
             </ul>
         </section>
 
         <section class="section">
-            <h2>Información pendiente</h2>
+
+            <h2 data-i18n="pendingTitle">
+                Información pendiente
+            </h2>
+
             <ul class="pending-list">
-                <li>Nombre definitivo de la organización o entidad colaboradora.</li>
-                <li>Número definitivo de beneficiarios y detalle de los grupos de edad.</li>
-                <li>Responsables de la coordinación local y de la ejecución.</li>
-                <li>Información complementaria sobre la logística de la jornada.</li>
-                <li>Versión final de los documentos de apoyo y de las imágenes.</li>
+
+                <li data-i18n="pending1">
+                    Nombre definitivo de la organización
+                    o entidad colaboradora.
+                </li>
+
+                <li data-i18n="pending2">
+                    Número definitivo de beneficiarios
+                    y grupos de edad.
+                </li>
+
+                <li data-i18n="pending3">
+                    Responsables de la coordinación local.
+                </li>
+
+                <li data-i18n="pending4">
+                    Información complementaria sobre
+                    la logística.
+                </li>
+
+                <li data-i18n="pending5">
+                    Versiones finales de documentos
+                    e imágenes.
+                </li>
+
             </ul>
         </section>
 
         <section class="section">
-            <h2>Cobertura visual</h2>
+
+            <h2 data-i18n="galleryTitle">
+                Cobertura visual
+            </h2>
+
             <div class="gallery">
+
                 <figure class="gallery-item">
-                    <img src="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/IMAGENES/01_PORTADA/PORTADA_OFICIAL_V1.png" alt="Portada oficial del proyecto" />
-                    <figcaption>Portada oficial del proyecto.</figcaption>
+                    <img
+                        src="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/IMAGENES/01_PORTADA/PORTADA_OFICIAL_V1.png"
+                        alt="Portada oficial del proyecto"
+                    >
+
+                    <figcaption data-i18n="galleryCaption1">
+                        Portada oficial del proyecto.
+                    </figcaption>
                 </figure>
+
                 <figure class="gallery-item">
-                    <img src="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/IMAGENES/02_MAPAS/MAPA_03_ISLA_DE_ANNOBON.png" alt="Mapa de la isla de Annobón" />
-                    <figcaption>Mapa de la isla de Annobón.</figcaption>
+                    <img
+                        src="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/IMAGENES/02_MAPAS/MAPA_03_ISLA_DE_ANNOBON.png"
+                        alt="Mapa de la isla de Annobón"
+                    >
+
+                    <figcaption data-i18n="galleryCaption2">
+                        Mapa de la isla de Annobón.
+                    </figcaption>
                 </figure>
+
                 <figure class="gallery-item">
-                    <img src="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/IMAGENES/03_FOTOGRAFIAS/FOTO_02_SAN_ANTONIO_DE_PALE.png" alt="Vista de San Antonio de Palé" />
-                    <figcaption>Vista de San Antonio de Palé.</figcaption>
+                    <img
+                        src="20_CANDIDATURA_UN_JUGUETE_UNA_ILUSION/IMAGENES/03_FOTOGRAFIAS/FOTO_02_SAN_ANTONIO_DE_PALE.png"
+                        alt="Vista de San Antonio de Palé"
+                    >
+
+                    <figcaption data-i18n="galleryCaption3">
+                        Vista de San Antonio de Palé.
+                    </figcaption>
                 </figure>
+
             </div>
         </section>
+
     </main>
 
     <footer>
-        <p><strong>Proyecto Annobón</strong> — Candidatura “Un Juguete, una Ilusión”</p>
-        <p>Versión actual: 1.0</p>
-        <p>Última actualización: 12/07/2026</p>
+
+        <p>
+            <strong data-i18n="footerProject">
+                Proyecto Annobón
+            </strong>
+
+            —
+
+            <span data-i18n="footerApplication">
+                Candidatura «Un Juguete, una Ilusión»
+            </span>
+        </p>
+
+        <p data-i18n="footerVersion">
+            Versión actual: 2.0
+        </p>
+
+        <p data-i18n="footerUpdated">
+            Última actualización: 13/07/2026
+        </p>
+
     </footer>
 
-    <button class="back-to-top" id="backToTop" aria-label="Volver arriba">↑ Volver arriba</button>
-    <div class="lang-feedback" id="langFeedback" role="status" aria-live="polite"></div>
+    <button
+        class="back-to-top"
+        id="backToTop"
+        type="button"
+        aria-label="Volver arriba"
+        data-i18n="backToTop"
+    >
+        ↑ Volver arriba
+    </button>
 
-    <script src="assets/js/script.js"></script>
+    <div
+        class="translation-toast"
+        id="translationToast"
+        role="status"
+        aria-live="polite"
+    ></div>
+
     <script>
-        const menuToggle = document.getElementById('menuToggle');
-        const nav = document.querySelector('.nav');
-        const backToTop = document.getElementById('backToTop');
-        const langToggle = document.getElementById('langToggle');
-        const langMenu = document.getElementById('langMenu');
-        const langCurrent = document.getElementById('langCurrent');
-        const langFeedback = document.getElementById('langFeedback');
-        const langOptions = document.querySelectorAll('.lang-option');
+        const translations = {
+            es: {
+                brandTitle: "Proyecto Annobón",
+                brandSubtitle: "Un Juguete, una Ilusión",
+                menuButton: "Menú",
+                navSummary: "Resumen",
+                navIndicators: "Indicadores",
+                navNavigation: "Navegación",
+                navStatus: "Estado",
+                navTimeline: "Cronología",
+                navActions: "Próximas acciones",
+                heroBadge: "Candidatura en desarrollo",
+                heroTitle: "Proyecto Annobón",
+                heroText1:
+                    "Programa integral de apoyo a la infancia, la educación y el desarrollo comunitario.",
+                heroText2:
+                    "Portal de seguimiento del dossier «Un Juguete, una Ilusión» para la isla de Annobón.",
+                openApplication: "Abrir candidatura",
+                openAnnexes: "Ver anexos",
+                progressTitle: "Avance del proyecto",
+                progressValue: "Estimación interna: 68 %",
+                progressNote:
+                    "Esta barra refleja una estimación interna de avance documental y no sustituye un seguimiento oficial.",
+                summaryTitle: "Resumen del proyecto",
+                summaryText1:
+                    "El proyecto «Un Juguete, una Ilusión» se presenta como una iniciativa educativa y comunitaria orientada a la infancia de Annobón.",
+                summaryText2:
+                    "El dossier reúne información de contexto, anexos, referencias, recursos visuales y documentos de seguimiento para apoyar la candidatura.",
+                summaryText3:
+                    "La propuesta pone el foco en el juego como herramienta de aprendizaje, en la participación de la comunidad y en la mejora de oportunidades para los niños y niñas de la isla.",
+                indicatorsTitle: "Panel de indicadores",
+                documents: "Documentos",
+                annexes: "Anexos",
+                maps: "Mapas",
+                photos: "Fotografías",
+                references: "Referencias",
+                estimatedProgress: "Avance estimado",
+                cardsTitle: "Navegación principal",
+                cardApplicationTitle: "📄 Candidatura",
+                cardApplicationText:
+                    "Documento central de presentación de la iniciativa.",
+                cardAnnexesTitle: "📑 Anexos",
+                cardAnnexesText:
+                    "Material complementario sobre contexto, educación y jornada.",
+                cardMapsTitle: "🗺️ Mapas",
+                cardMapsText:
+                    "Recursos cartográficos y visuales de la isla y de la región.",
+                cardPhotosTitle: "📸 Fotografías",
+                cardPhotosText:
+                    "Material fotográfico de Annobón y de la propuesta.",
+                cardReferencesTitle: "📚 Referencias",
+                cardReferencesText:
+                    "Documentos de apoyo sobre geografía, educación e infancia.",
+                cardProjectTitle: "🌍 Proyecto Annobón",
+                cardProjectText:
+                    "Visión general de los programas educativos y solidarios.",
+                cardExportsTitle: "📦 Exportaciones",
+                cardExportsText:
+                    "Versiones finales preparadas para presentación o envío.",
+                cardPartnersTitle: "🤝 Colaboración",
+                cardPartnersText:
+                    "Información para ONG, fundaciones y posibles entidades colaboradoras.",
+                open: "Abrir",
+                openMap: "Abrir mapa",
+                openPhoto: "Abrir fotografía",
+                pageInPreparation: "Página en preparación",
+                statusTitle: "Estado del proyecto",
+                completed: "Terminadas",
+                inProgress: "En curso",
+                toDo: "Por realizar",
+                statusItem1:
+                    "Estructura documental del dossier consolidada.",
+                statusItem2:
+                    "Documentos principales y anexos preparados.",
+                statusItem3:
+                    "Revisión de la candidatura y refinamiento del contenido.",
+                statusItem4:
+                    "Integración de referencias y recursos visuales.",
+                statusItem5:
+                    "Confirmación de datos definitivos sobre beneficiarios y colaboración.",
+                statusItem6:
+                    "Preparación de las versiones finales de presentación.",
+                timelineTitle: "Cronología",
+                timelineStep1Title: "Inicio de la preparación",
+                timelineStep1Text:
+                    "Constitución de la base documental y del dossier.",
+                timelineStep2Title: "Desarrollo del contenido",
+                timelineStep2Text:
+                    "Elaboración del proyecto, objetivos, anexos y contexto local.",
+                timelineStep3Title: "Organización de recursos",
+                timelineStep3Text:
+                    "Integración de referencias, mapas y fotografías.",
+                timelineStep4Title: "Seguimiento documental",
+                timelineStep4Text:
+                    "Creación de controles de calidad, revisión y auditoría.",
+                timelineStep5Title: "Próxima fase",
+                timelineStep5Text:
+                    "Finalización de la candidatura y preparación del envío.",
+                actionsTitle: "Próximas acciones",
+                action1:
+                    "Completar la información sobre la entidad colaboradora.",
+                action2:
+                    "Confirmar el número de beneficiarios y las edades objetivo.",
+                action3:
+                    "Revisar la coherencia del dossier con las bases de la convocatoria.",
+                action4:
+                    "Preparar la versión final de presentación.",
+                action5:
+                    "Incorporar los recursos visuales definitivos.",
+                pendingTitle: "Información pendiente",
+                pending1:
+                    "Nombre definitivo de la organización o entidad colaboradora.",
+                pending2:
+                    "Número definitivo de beneficiarios y grupos de edad.",
+                pending3:
+                    "Responsables de la coordinación local.",
+                pending4:
+                    "Información complementaria sobre la logística.",
+                pending5:
+                    "Versiones finales de documentos e imágenes.",
+                galleryTitle: "Cobertura visual",
+                galleryCaption1: "Portada oficial del proyecto.",
+                galleryCaption2: "Mapa de la isla de Annobón.",
+                galleryCaption3: "Vista de San Antonio de Palé.",
+                footerProject: "Proyecto Annobón",
+                footerApplication:
+                    "Candidatura «Un Juguete, una Ilusión»",
+                footerVersion: "Versión actual: 2.0",
+                footerUpdated:
+                    "Última actualización: 13/07/2026",
+                backToTop: "↑ Volver arriba",
+                languageChanged:
+                    "Idioma cambiado a español."
+            },
+
+            fr: {
+                brandTitle: "Projet Annobón",
+                brandSubtitle: "Un jouet, une illusion",
+                menuButton: "Menu",
+                navSummary: "Résumé",
+                navIndicators: "Indicateurs",
+                navNavigation: "Navigation",
+                navStatus: "État",
+                navTimeline: "Chronologie",
+                navActions: "Prochaines actions",
+                heroBadge: "Candidature en préparation",
+                heroTitle: "Projet Annobón",
+                heroText1:
+                    "Programme global de soutien à l’enfance, à l’éducation et au développement communautaire.",
+                heroText2:
+                    "Portail de suivi du dossier «Un jouet, une illusion» pour l’île d’Annobón.",
+                openApplication: "Ouvrir la candidature",
+                openAnnexes: "Voir les annexes",
+                progressTitle: "Avancement du projet",
+                progressValue: "Estimation interne : 68 %",
+                progressNote:
+                    "Cette barre correspond à une estimation interne de l’avancement documentaire et ne remplace pas un suivi officiel.",
+                summaryTitle: "Résumé du projet",
+                summaryText1:
+                    "Le projet «Un jouet, une illusion» est une initiative éducative et communautaire destinée aux enfants d’Annobón.",
+                summaryText2:
+                    "Le dossier rassemble le contexte, les annexes, les références, les ressources visuelles et les documents de suivi nécessaires à la candidature.",
+                summaryText3:
+                    "La proposition place le jeu au cœur de l’apprentissage, de la participation communautaire et de l’amélioration des possibilités offertes aux enfants de l’île.",
+                indicatorsTitle: "Tableau des indicateurs",
+                documents: "Documents",
+                annexes: "Annexes",
+                maps: "Cartes",
+                photos: "Photographies",
+                references: "Références",
+                estimatedProgress: "Avancement estimé",
+                cardsTitle: "Navigation principale",
+                cardApplicationTitle: "📄 Candidature",
+                cardApplicationText:
+                    "Document central de présentation de l’initiative.",
+                cardAnnexesTitle: "📑 Annexes",
+                cardAnnexesText:
+                    "Informations complémentaires sur le contexte, l’éducation et la journée.",
+                cardMapsTitle: "🗺️ Cartes",
+                cardMapsText:
+                    "Ressources cartographiques et visuelles de l’île et de la région.",
+                cardPhotosTitle: "📸 Photographies",
+                cardPhotosText:
+                    "Ressources photographiques sur Annobón et le projet.",
+                cardReferencesTitle: "📚 Références",
+                cardReferencesText:
+                    "Documents d’appui sur la géographie, l’éducation et l’enfance.",
+                cardProjectTitle: "🌍 Projet Annobón",
+                cardProjectText:
+                    "Présentation générale des programmes éducatifs et solidaires.",
+                cardExportsTitle: "📦 Exportations",
+                cardExportsText:
+                    "Versions finales préparées pour la présentation ou l’envoi.",
+                cardPartnersTitle: "🤝 Collaboration",
+                cardPartnersText:
+                    "Informations destinées aux ONG, fondations et partenaires potentiels.",
+                open: "Ouvrir",
+                openMap: "Ouvrir la carte",
+                openPhoto: "Ouvrir la photographie",
+                pageInPreparation: "Page en préparation",
+                statusTitle: "État du projet",
+                completed: "Terminées",
+                inProgress: "En cours",
+                toDo: "À réaliser",
+                statusItem1:
+                    "Structure documentaire du dossier consolidée.",
+                statusItem2:
+                    "Documents principaux et annexes préparés.",
+                statusItem3:
+                    "Révision de la candidature et amélioration du contenu.",
+                statusItem4:
+                    "Intégration des références et ressources visuelles.",
+                statusItem5:
+                    "Confirmation des données définitives sur les bénéficiaires et la collaboration.",
+                statusItem6:
+                    "Préparation des versions finales de présentation.",
+                timelineTitle: "Chronologie",
+                timelineStep1Title: "Début de la préparation",
+                timelineStep1Text:
+                    "Constitution de la base documentaire et du dossier.",
+                timelineStep2Title: "Développement du contenu",
+                timelineStep2Text:
+                    "Élaboration du projet, des objectifs, des annexes et du contexte local.",
+                timelineStep3Title: "Organisation des ressources",
+                timelineStep3Text:
+                    "Intégration des références, cartes et photographies.",
+                timelineStep4Title: "Suivi documentaire",
+                timelineStep4Text:
+                    "Création de contrôles qualité, de révisions et d’audits.",
+                timelineStep5Title: "Prochaine phase",
+                timelineStep5Text:
+                    "Finalisation de la candidature et préparation de l’envoi.",
+                actionsTitle: "Prochaines actions",
+                action1:
+                    "Compléter les informations sur l’entité partenaire.",
+                action2:
+                    "Confirmer le nombre de bénéficiaires et les groupes d’âge.",
+                action3:
+                    "Vérifier la cohérence du dossier avec les règles de l’appel.",
+                action4:
+                    "Préparer la version finale de présentation.",
+                action5:
+                    "Intégrer les ressources visuelles définitives.",
+                pendingTitle: "Informations en attente",
+                pending1:
+                    "Nom définitif de l’organisation ou de l’entité partenaire.",
+                pending2:
+                    "Nombre définitif de bénéficiaires et groupes d’âge.",
+                pending3:
+                    "Responsables de la coordination locale.",
+                pending4:
+                    "Informations complémentaires sur la logistique.",
+                pending5:
+                    "Versions finales des documents et des images.",
+                galleryTitle: "Couverture visuelle",
+                galleryCaption1: "Couverture officielle du projet.",
+                galleryCaption2: "Carte de l’île d’Annobón.",
+                galleryCaption3: "Vue de San Antonio de Palé.",
+                footerProject: "Projet Annobón",
+                footerApplication:
+                    "Candidature «Un jouet, une illusion»",
+                footerVersion: "Version actuelle : 2.0",
+                footerUpdated:
+                    "Dernière mise à jour : 13/07/2026",
+                backToTop: "↑ Retour en haut",
+                languageChanged:
+                    "La langue a été changée en français."
+            },
+
+            en: {
+                brandTitle: "Annobón Project",
+                brandSubtitle: "A Toy, a Dream",
+                menuButton: "Menu",
+                navSummary: "Summary",
+                navIndicators: "Indicators",
+                navNavigation: "Navigation",
+                navStatus: "Status",
+                navTimeline: "Timeline",
+                navActions: "Next actions",
+                heroBadge: "Application in development",
+                heroTitle: "Annobón Project",
+                heroText1:
+                    "Comprehensive programme supporting children, education and community development.",
+                heroText2:
+                    "Monitoring portal for the «A Toy, a Dream» application for Annobón Island.",
+                openApplication: "Open application",
+                openAnnexes: "View annexes",
+                progressTitle: "Project progress",
+                progressValue: "Internal estimate: 68%",
+                progressNote:
+                    "This bar reflects an internal estimate of documentary progress and does not replace official monitoring.",
+                summaryTitle: "Project summary",
+                summaryText1:
+                    "The «A Toy, a Dream» project is an educational and community initiative focused on the children of Annobón.",
+                summaryText2:
+                    "The dossier brings together contextual information, annexes, references, visual resources and monitoring documents supporting the application.",
+                summaryText3:
+                    "The proposal uses play as a learning tool while promoting community participation and improving opportunities for the island’s children.",
+                indicatorsTitle: "Indicator dashboard",
+                documents: "Documents",
+                annexes: "Annexes",
+                maps: "Maps",
+                photos: "Photographs",
+                references: "References",
+                estimatedProgress: "Estimated progress",
+                cardsTitle: "Main navigation",
+                cardApplicationTitle: "📄 Application",
+                cardApplicationText:
+                    "Main document presenting the initiative.",
+                cardAnnexesTitle: "📑 Annexes",
+                cardAnnexesText:
+                    "Additional material on context, education and programme activities.",
+                cardMapsTitle: "🗺️ Maps",
+                cardMapsText:
+                    "Geographical and visual resources about the island and the region.",
+                cardPhotosTitle: "📸 Photographs",
+                cardPhotosText:
+                    "Photographic material about Annobón and the proposal.",
+                cardReferencesTitle: "📚 References",
+                cardReferencesText:
+                    "Supporting documents on geography, education and childhood.",
+                cardProjectTitle: "🌍 Annobón Project",
+                cardProjectText:
+                    "Overview of the educational and solidarity programmes.",
+                cardExportsTitle: "📦 Exports",
+                cardExportsText:
+                    "Final versions prepared for presentation or submission.",
+                cardPartnersTitle: "🤝 Collaboration",
+                cardPartnersText:
+                    "Information for NGOs, foundations and potential partner organisations.",
+                open: "Open",
+                openMap: "Open map",
+                openPhoto: "Open photograph",
+                pageInPreparation: "Page in preparation",
+                statusTitle: "Project status",
+                completed: "Completed",
+                inProgress: "In progress",
+                toDo: "To do",
+                statusItem1:
+                    "Document structure of the dossier consolidated.",
+                statusItem2:
+                    "Main documents and annexes prepared.",
+                statusItem3:
+                    "Application review and content refinement.",
+                statusItem4:
+                    "Integration of references and visual resources.",
+                statusItem5:
+                    "Confirmation of final beneficiary and partnership information.",
+                statusItem6:
+                    "Preparation of final presentation versions.",
+                timelineTitle: "Timeline",
+                timelineStep1Title: "Start of preparation",
+                timelineStep1Text:
+                    "Creation of the documentary base and dossier.",
+                timelineStep2Title: "Content development",
+                timelineStep2Text:
+                    "Development of the project, objectives, annexes and local context.",
+                timelineStep3Title: "Resource organisation",
+                timelineStep3Text:
+                    "Integration of references, maps and photographs.",
+                timelineStep4Title: "Document monitoring",
+                timelineStep4Text:
+                    "Creation of quality controls, reviews and audits.",
+                timelineStep5Title: "Next phase",
+                timelineStep5Text:
+                    "Finalisation of the application and preparation for submission.",
+                actionsTitle: "Next actions",
+                action1:
+                    "Complete information about the partner organisation.",
+                action2:
+                    "Confirm the number of beneficiaries and target age groups.",
+                action3:
+                    "Review the dossier’s consistency with the call requirements.",
+                action4:
+                    "Prepare the final presentation version.",
+                action5:
+                    "Integrate the final visual resources.",
+                pendingTitle: "Pending information",
+                pending1:
+                    "Final name of the organisation or partner entity.",
+                pending2:
+                    "Final number of beneficiaries and age groups.",
+                pending3:
+                    "Local coordination managers.",
+                pending4:
+                    "Additional logistical information.",
+                pending5:
+                    "Final versions of documents and images.",
+                galleryTitle: "Visual coverage",
+                galleryCaption1: "Official project cover.",
+                galleryCaption2: "Map of Annobón Island.",
+                galleryCaption3: "View of San Antonio de Palé.",
+                footerProject: "Annobón Project",
+                footerApplication:
+                    "«A Toy, a Dream» application",
+                footerVersion: "Current version: 2.0",
+                footerUpdated:
+                    "Last update: 13/07/2026",
+                backToTop: "↑ Back to top",
+                languageChanged:
+                    "Language changed to English."
+            },
+
+            ar: {
+                brandTitle: "مشروع أنوبون",
+                brandSubtitle: "لعبة وأمل",
+                menuButton: "القائمة",
+                navSummary: "الملخص",
+                navIndicators: "المؤشرات",
+                navNavigation: "التنقل",
+                navStatus: "الحالة",
+                navTimeline: "الجدول الزمني",
+                navActions: "الخطوات القادمة",
+                heroBadge: "الترشيح قيد الإعداد",
+                heroTitle: "مشروع أنوبون",
+                heroText1:
+                    "برنامج شامل لدعم الطفولة والتعليم والتنمية المجتمعية.",
+                heroText2:
+                    "بوابة متابعة ملف مشروع «لعبة وأمل» لجزيرة أنوبون.",
+                openApplication: "فتح ملف الترشيح",
+                openAnnexes: "عرض الملاحق",
+                progressTitle: "تقدم المشروع",
+                progressValue: "تقدير داخلي: 68٪",
+                progressNote:
+                    "يعكس هذا الشريط تقديراً داخلياً للتقدم الوثائقي ولا يحل محل المتابعة الرسمية.",
+                summaryTitle: "ملخص المشروع",
+                summaryText1:
+                    "مشروع «لعبة وأمل» مبادرة تعليمية ومجتمعية موجهة إلى أطفال أنوبون.",
+                summaryText2:
+                    "يجمع الملف معلومات السياق والملاحق والمراجع والموارد البصرية ووثائق المتابعة الداعمة للترشيح.",
+                summaryText3:
+                    "يركز المقترح على اللعب كوسيلة للتعلم وعلى مشاركة المجتمع وتحسين الفرص المتاحة لأطفال الجزيرة.",
+                indicatorsTitle: "لوحة المؤشرات",
+                documents: "الوثائق",
+                annexes: "الملاحق",
+                maps: "الخرائط",
+                photos: "الصور",
+                references: "المراجع",
+                estimatedProgress: "التقدم التقديري",
+                cardsTitle: "التنقل الرئيسي",
+                cardApplicationTitle: "📄 ملف الترشيح",
+                cardApplicationText:
+                    "الوثيقة الرئيسية لتقديم المبادرة.",
+                cardAnnexesTitle: "📑 الملاحق",
+                cardAnnexesText:
+                    "مواد إضافية حول السياق والتعليم وبرنامج الأنشطة.",
+                cardMapsTitle: "🗺️ الخرائط",
+                cardMapsText:
+                    "موارد جغرافية وبصرية حول الجزيرة والمنطقة.",
+                cardPhotosTitle: "📸 الصور",
+                cardPhotosText:
+                    "مواد فوتوغرافية عن أنوبون والمبادرة.",
+                cardReferencesTitle: "📚 المراجع",
+                cardReferencesText:
+                    "وثائق داعمة حول الجغرافيا والتعليم والطفولة.",
+                cardProjectTitle: "🌍 مشروع أنوبون",
+                cardProjectText:
+                    "نظرة عامة على البرامج التعليمية والتضامنية.",
+                cardExportsTitle: "📦 النسخ النهائية",
+                cardExportsText:
+                    "نسخ نهائية معدة للعرض أو الإرسال.",
+                cardPartnersTitle: "🤝 التعاون",
+                cardPartnersText:
+                    "معلومات للمنظمات والمؤسسات والجهات الشريكة المحتملة.",
+                open: "فتح",
+                openMap: "فتح الخريطة",
+                openPhoto: "فتح الصورة",
+                pageInPreparation: "الصفحة قيد الإعداد",
+                statusTitle: "حالة المشروع",
+                completed: "مكتمل",
+                inProgress: "قيد التنفيذ",
+                toDo: "مطلوب",
+                statusItem1:
+                    "تم توحيد الهيكل الوثائقي للملف.",
+                statusItem2:
+                    "تم إعداد الوثائق الرئيسية والملاحق.",
+                statusItem3:
+                    "مراجعة الترشيح وتحسين المحتوى.",
+                statusItem4:
+                    "إدماج المراجع والموارد البصرية.",
+                statusItem5:
+                    "تأكيد المعلومات النهائية حول المستفيدين والتعاون.",
+                statusItem6:
+                    "إعداد النسخ النهائية للعرض.",
+                timelineTitle: "الجدول الزمني",
+                timelineStep1Title: "بداية الإعداد",
+                timelineStep1Text:
+                    "إنشاء القاعدة الوثائقية والملف.",
+                timelineStep2Title: "تطوير المحتوى",
+                timelineStep2Text:
+                    "إعداد المشروع والأهداف والملاحق والسياق المحلي.",
+                timelineStep3Title: "تنظيم الموارد",
+                timelineStep3Text:
+                    "إدماج المراجع والخرائط والصور.",
+                timelineStep4Title: "المتابعة الوثائقية",
+                timelineStep4Text:
+                    "إنشاء ضوابط الجودة والمراجعة والتدقيق.",
+                timelineStep5Title: "المرحلة القادمة",
+                timelineStep5Text:
+                    "استكمال الترشيح والاستعداد للإرسال.",
+                actionsTitle: "الخطوات القادمة",
+                action1:
+                    "استكمال المعلومات حول الجهة الشريكة.",
+                action2:
+                    "تأكيد عدد المستفيدين والفئات العمرية المستهدفة.",
+                action3:
+                    "مراجعة توافق الملف مع شروط الدعوة.",
+                action4:
+                    "إعداد النسخة النهائية للعرض.",
+                action5:
+                    "إدماج الموارد البصرية النهائية.",
+                pendingTitle: "معلومات قيد الانتظار",
+                pending1:
+                    "الاسم النهائي للمنظمة أو الجهة الشريكة.",
+                pending2:
+                    "العدد النهائي للمستفيدين والفئات العمرية.",
+                pending3:
+                    "مسؤولو التنسيق المحلي.",
+                pending4:
+                    "معلومات إضافية حول الجوانب اللوجستية.",
+                pending5:
+                    "النسخ النهائية للوثائق والصور.",
+                galleryTitle: "التغطية البصرية",
+                galleryCaption1: "الغلاف الرسمي للمشروع.",
+                galleryCaption2: "خريطة جزيرة أنوبون.",
+                galleryCaption3: "منظر لسان أنطونيو دي باليه.",
+                footerProject: "مشروع أنوبون",
+                footerApplication:
+                    "ملف مشروع «لعبة وأمل»",
+                footerVersion: "الإصدار الحالي: 2.0",
+                footerUpdated:
+                    "آخر تحديث: 13/07/2026",
+                backToTop: "↑ العودة إلى الأعلى",
+                languageChanged:
+                    "تم تغيير اللغة إلى العربية."
+            }
+        };
+
+        const menuToggle =
+            document.getElementById("menuToggle");
+
+        const nav =
+            document.querySelector(".nav");
+
+        const navLinks =
+            document.querySelectorAll(".nav-links a");
+
+        const backToTop =
+            document.getElementById("backToTop");
+
+        const languageSelect =
+            document.getElementById("languageSelect");
+
+        const translationToast =
+            document.getElementById("translationToast");
+
+        let toastTimer = null;
+
+        function showToast(message) {
+            if (!translationToast) {
+                return;
+            }
+
+            translationToast.textContent = message;
+            translationToast.classList.add("show");
+
+            window.clearTimeout(toastTimer);
+
+            toastTimer = window.setTimeout(() => {
+                translationToast.classList.remove("show");
+            }, 2500);
+        }
+
+        function applyLanguage(language) {
+            const selectedLanguage =
+                translations[language] ? language : "es";
+
+            const dictionary =
+                translations[selectedLanguage];
+
+            document.documentElement.lang =
+                selectedLanguage;
+
+            document.documentElement.dir =
+                selectedLanguage === "ar"
+                    ? "rtl"
+                    : "ltr";
+
+            document.body.dir =
+                selectedLanguage === "ar"
+                    ? "rtl"
+                    : "ltr";
+
+            document
+                .querySelectorAll("[data-i18n]")
+                .forEach((element) => {
+                    const key =
+                        element.dataset.i18n;
+
+                    if (
+                        Object.prototype.hasOwnProperty.call(
+                            dictionary,
+                            key
+                        )
+                    ) {
+                        element.textContent =
+                            dictionary[key];
+                    }
+                });
+
+            if (languageSelect) {
+                languageSelect.value =
+                    selectedLanguage;
+            }
+
+            if (menuToggle) {
+                menuToggle.setAttribute(
+                    "aria-label",
+                    dictionary.menuButton
+                );
+            }
+
+            if (backToTop) {
+                backToTop.setAttribute(
+                    "aria-label",
+                    dictionary.backToTop
+                );
+            }
+
+            localStorage.setItem(
+                "annobon-language",
+                selectedLanguage
+            );
+
+            showToast(
+                dictionary.languageChanged
+            );
+        }
 
         if (menuToggle && nav) {
-            menuToggle.addEventListener('click', () => {
-                nav.classList.toggle('open');
-            });
-        }
+            menuToggle.addEventListener(
+                "click",
+                () => {
+                    const isOpen =
+                        nav.classList.toggle("open");
 
-        if (langToggle && langMenu) {
-            langToggle.addEventListener('click', () => {
-                const isOpen = langMenu.classList.toggle('is-open');
-                langToggle.setAttribute('aria-expanded', String(isOpen));
-            });
-
-            langOptions.forEach((option) => {
-                option.addEventListener('click', () => {
-                    if (option.dataset.lang === 'Español') {
-                        langOptions.forEach((item) => {
-                            item.classList.toggle('is-active', item === option);
-                            item.setAttribute('aria-checked', String(item === option));
-                        });
-                        if (langCurrent) {
-                            langCurrent.textContent = 'Español';
-                        }
-                        langMenu.classList.remove('is-open');
-                        langToggle.setAttribute('aria-expanded', 'false');
-                        return;
-                    }
-
-                    if (langFeedback) {
-                        langFeedback.textContent = option.dataset.message || 'Traducción no disponible';
-                        langFeedback.classList.add('is-visible');
-                        window.clearTimeout(langFeedback.timeoutId);
-                        langFeedback.timeoutId = window.setTimeout(() => {
-                            langFeedback.classList.remove('is-visible');
-                        }, 2400);
-                    }
-
-                    langMenu.classList.remove('is-open');
-                    langToggle.setAttribute('aria-expanded', 'false');
-                });
-            });
-
-            document.addEventListener('click', (event) => {
-                if (!langToggle.contains(event.target) && !langMenu.contains(event.target)) {
-                    langMenu.classList.remove('is-open');
-                    langToggle.setAttribute('aria-expanded', 'false');
+                    menuToggle.setAttribute(
+                        "aria-expanded",
+                        String(isOpen)
+                    );
                 }
-            });
+            );
         }
 
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 280) {
-                backToTop.classList.add('show');
-            } else {
-                backToTop.classList.remove('show');
-            }
+        navLinks.forEach((link) => {
+            link.addEventListener(
+                "click",
+                () => {
+                    if (nav) {
+                        nav.classList.remove("open");
+                    }
+
+                    if (menuToggle) {
+                        menuToggle.setAttribute(
+                            "aria-expanded",
+                            "false"
+                        );
+                    }
+                }
+            );
         });
 
+        window.addEventListener(
+            "scroll",
+            () => {
+                if (!backToTop) {
+                    return;
+                }
+
+                if (window.scrollY > 280) {
+                    backToTop.classList.add("show");
+                } else {
+                    backToTop.classList.remove("show");
+                }
+            }
+        );
+
         if (backToTop) {
-            backToTop.addEventListener('click', () => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
+            backToTop.addEventListener(
+                "click",
+                () => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: "smooth"
+                    });
+                }
+            );
         }
+
+        if (languageSelect) {
+            languageSelect.addEventListener(
+                "change",
+                (event) => {
+                    applyLanguage(
+                        event.target.value
+                    );
+                }
+            );
+        }
+
+        const savedLanguage =
+            localStorage.getItem(
+                "annobon-language"
+            ) || "es";
+
+        applyLanguage(savedLanguage);
     </script>
 </body>
 </html>
