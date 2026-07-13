@@ -8,6 +8,7 @@
         content="Portal interactivo del proyecto Un Juguete, una Ilusión para Annobón."
     />
     <title>Proyecto Annobón | Un Juguete, una Ilusión</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
     <style>
         :root {
             --bg: #f7f2eb;
@@ -99,6 +100,107 @@
             border-radius: 999px;
             padding: 0.55rem 0.8rem;
             cursor: pointer;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .lang-switcher {
+            position: relative;
+        }
+
+        .lang-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            border-radius: 999px;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(34, 49, 63, 0.05);
+        }
+
+        .lang-toggle:hover,
+        .lang-toggle:focus-visible {
+            border-color: var(--accent);
+            outline: none;
+        }
+
+        .lang-caret {
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+
+        .lang-menu {
+            position: absolute;
+            top: calc(100% + 0.45rem);
+            right: 0;
+            min-width: 180px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            box-shadow: var(--shadow);
+            padding: 0.35rem;
+            display: none;
+            flex-direction: column;
+            z-index: 1002;
+        }
+
+        .lang-menu.is-open {
+            display: flex;
+        }
+
+        .lang-option {
+            border: 0;
+            background: transparent;
+            text-align: left;
+            padding: 0.6rem 0.7rem;
+            border-radius: 10px;
+            color: var(--text);
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .lang-option:hover,
+        .lang-option:focus-visible {
+            background: var(--surface-2);
+            color: var(--accent);
+            outline: none;
+        }
+
+        .lang-option.is-active {
+            background: rgba(183, 93, 44, 0.12);
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .lang-feedback {
+            position: fixed;
+            right: 1rem;
+            bottom: 4.4rem;
+            background: rgba(34, 49, 63, 0.94);
+            color: white;
+            padding: 0.7rem 0.9rem;
+            border-radius: 999px;
+            font-size: 0.92rem;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            transform: translateY(6px);
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            z-index: 1003;
+        }
+
+        .lang-feedback.is-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .container {
@@ -379,6 +481,12 @@
                 width: 100%;
                 padding-top: 0.6rem;
             }
+            .nav.open .nav-actions {
+                display: flex;
+                width: 100%;
+                justify-content: flex-start;
+                padding-top: 0.3rem;
+            }
             .stats-grid { grid-template-columns: 1fr; }
             .cards-grid { grid-template-columns: 1fr; }
             .gallery { grid-template-columns: 1fr; }
@@ -405,6 +513,20 @@
                 <a href="#estado">Estado</a>
                 <a href="#cronologia">Cronología</a>
                 <a href="#acciones">Próximas acciones</a>
+            </div>
+            <div class="nav-actions">
+                <div class="lang-switcher">
+                    <button class="lang-toggle" id="langToggle" type="button" aria-expanded="false" aria-controls="langMenu">
+                        <span class="lang-current" id="langCurrent">Español</span>
+                        <span class="lang-caret" aria-hidden="true">▾</span>
+                    </button>
+                    <div class="lang-menu" id="langMenu" role="menu" aria-label="Selector de idioma">
+                        <button class="lang-option is-active" type="button" role="menuitemradio" aria-checked="true" data-lang="Español" data-message="">Español</button>
+                        <button class="lang-option" type="button" role="menuitemradio" aria-checked="false" data-lang="Français" data-message="Versión francesa en preparación">Français</button>
+                        <button class="lang-option" type="button" role="menuitemradio" aria-checked="false" data-lang="English" data-message="English version in preparation">English</button>
+                        <button class="lang-option" type="button" role="menuitemradio" aria-checked="false" data-lang="العربية" data-message="النسخة العربية قيد الإعداد">العربية</button>
+                    </div>
+                </div>
             </div>
         </nav>
     </header>
@@ -599,15 +721,65 @@
     </footer>
 
     <button class="back-to-top" id="backToTop" aria-label="Volver arriba">↑ Volver arriba</button>
+    <div class="lang-feedback" id="langFeedback" role="status" aria-live="polite"></div>
 
+    <script src="assets/js/script.js"></script>
     <script>
         const menuToggle = document.getElementById('menuToggle');
         const nav = document.querySelector('.nav');
         const backToTop = document.getElementById('backToTop');
+        const langToggle = document.getElementById('langToggle');
+        const langMenu = document.getElementById('langMenu');
+        const langCurrent = document.getElementById('langCurrent');
+        const langFeedback = document.getElementById('langFeedback');
+        const langOptions = document.querySelectorAll('.lang-option');
 
         if (menuToggle && nav) {
             menuToggle.addEventListener('click', () => {
                 nav.classList.toggle('open');
+            });
+        }
+
+        if (langToggle && langMenu) {
+            langToggle.addEventListener('click', () => {
+                const isOpen = langMenu.classList.toggle('is-open');
+                langToggle.setAttribute('aria-expanded', String(isOpen));
+            });
+
+            langOptions.forEach((option) => {
+                option.addEventListener('click', () => {
+                    if (option.dataset.lang === 'Español') {
+                        langOptions.forEach((item) => {
+                            item.classList.toggle('is-active', item === option);
+                            item.setAttribute('aria-checked', String(item === option));
+                        });
+                        if (langCurrent) {
+                            langCurrent.textContent = 'Español';
+                        }
+                        langMenu.classList.remove('is-open');
+                        langToggle.setAttribute('aria-expanded', 'false');
+                        return;
+                    }
+
+                    if (langFeedback) {
+                        langFeedback.textContent = option.dataset.message || 'Traducción no disponible';
+                        langFeedback.classList.add('is-visible');
+                        window.clearTimeout(langFeedback.timeoutId);
+                        langFeedback.timeoutId = window.setTimeout(() => {
+                            langFeedback.classList.remove('is-visible');
+                        }, 2400);
+                    }
+
+                    langMenu.classList.remove('is-open');
+                    langToggle.setAttribute('aria-expanded', 'false');
+                });
+            });
+
+            document.addEventListener('click', (event) => {
+                if (!langToggle.contains(event.target) && !langMenu.contains(event.target)) {
+                    langMenu.classList.remove('is-open');
+                    langToggle.setAttribute('aria-expanded', 'false');
+                }
             });
         }
 
@@ -619,9 +791,11 @@
             }
         });
 
-        backToTop.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+        if (backToTop) {
+            backToTop.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
     </script>
 </body>
 </html>
