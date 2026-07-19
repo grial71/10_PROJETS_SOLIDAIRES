@@ -151,6 +151,12 @@
             color: var(--accent);
         }
 
+        .nav-links a[aria-current="page"] {
+            background: rgba(183, 93, 44, 0.13);
+            color: var(--accent);
+            font-weight: 700;
+        }
+
         .language-wrapper {
             position: relative;
             display: flex;
@@ -851,45 +857,27 @@
                 </button>
 
                 <div class="nav-links" id="navLinks">
-                    <a
-                        href="#resumen"
-                        data-i18n="navSummary"
-                    >
-                        Resumen
+                    <a href="index.html" data-i18n="navHome" aria-current="page">
+                        Inicio
                     </a>
 
-                    <a
-                        href="#indicadores"
-                        data-i18n="navIndicators"
-                    >
-                        Indicadores
+                    <a href="candidatura.html" data-i18n="navApplication">
+                        Candidatura
                     </a>
 
-                    <a
-                        href="#tarjetas"
-                        data-i18n="navNavigation"
-                    >
-                        Navegación
+                    <a href="anexos.html" data-i18n="navAnnexes">
+                        Anexos
                     </a>
 
-                    <a
-                        href="#estado"
-                        data-i18n="navStatus"
-                    >
+                    <a href="a-propos.html" data-i18n="navAbout">
+                        Sobre el proyecto
+                    </a>
+
+                    <a href="#estado" data-i18n="navStatus">
                         Estado
                     </a>
 
-                    <a
-                        href="#cronologia"
-                        data-i18n="navTimeline"
-                    >
-                        Cronología
-                    </a>
-
-                    <a
-                        href="#acciones"
-                        data-i18n="navActions"
-                    >
+                    <a href="#acciones" data-i18n="navActions">
                         Próximas acciones
                     </a>
                 </div>
@@ -1240,20 +1228,21 @@
 
                 <article class="card">
                     <h3 data-i18n="cardProjectTitle">
-                        🌍 Proyecto Annobón
+                        🌍 Sobre el proyecto
                     </h3>
 
                     <p data-i18n="cardProjectText">
-                        Visión general de los programas
-                        educativos y solidarios.
+                        Visión, valores, personas implicadas
+                        y evolución de la iniciativa.
                     </p>
 
-                    <span
+                    <a
                         class="link-btn"
-                        data-i18n="pageInPreparation"
+                        href="a-propos.html"
+                        data-i18n="open"
                     >
-                        Página en preparación
-                    </span>
+                        Abrir
+                    </a>
                 </article>
 
                 <article class="card disabled">
@@ -1573,7 +1562,7 @@
         </p>
 
         <p data-i18n="footerUpdated">
-            Última actualización: 18/07/2026
+            Última actualización: 19/07/2026
         </p>
 
     </footer>
@@ -1601,6 +1590,10 @@
                 brandTitle: "Proyecto Annobón",
                 brandSubtitle: "Un Juguete, una Ilusión",
                 menuButton: "Menú",
+                navHome: "Inicio",
+                navApplication: "Candidatura",
+                navAnnexes: "Anexos",
+                navAbout: "Sobre el proyecto",
                 navSummary: "Resumen",
                 navIndicators: "Indicadores",
                 navNavigation: "Navegación",
@@ -1649,9 +1642,9 @@
                 cardReferencesTitle: "📚 Referencias",
                 cardReferencesText:
                     "Documentos de apoyo sobre geografía, educación e infancia.",
-                cardProjectTitle: "🌍 Proyecto Annobón",
+                cardProjectTitle: "🌍 Sobre el proyecto",
                 cardProjectText:
-                    "Visión general de los programas educativos y solidarios.",
+                    "Visión, valores, personas implicadas y evolución de la iniciativa.",
                 cardExportsTitle: "📦 Exportaciones",
                 cardExportsText:
                     "Versiones finales preparadas para presentación o envío.",
@@ -1725,7 +1718,7 @@
                     "Candidatura «Un Juguete, una Ilusión»",
                 footerVersion: "Versión actual: 2.0",
                 footerUpdated:
-                    "Última actualización: 18/07/2026",
+                    "Última actualización: 19/07/2026",
                 backToTop: "↑ Volver arriba",
                 languageChanged:
                     "Idioma cambiado a español."
@@ -1735,6 +1728,14 @@
                 brandTitle: "Projet Annobón",
                 brandSubtitle: "Un jouet, une illusion",
                 menuButton: "Menu",
+                navHome: "Home",
+                navApplication: "Application",
+                navAnnexes: "Annexes",
+                navAbout: "About",
+                navHome: "Accueil",
+                navApplication: "Candidature",
+                navAnnexes: "Annexes",
+                navAbout: "À propos",
                 navSummary: "Résumé",
                 navIndicators: "Indicateurs",
                 navNavigation: "Navigation",
@@ -1783,9 +1784,9 @@
                 cardReferencesTitle: "📚 Références",
                 cardReferencesText:
                     "Documents d’appui sur la géographie, l’éducation et l’enfance.",
-                cardProjectTitle: "🌍 Projet Annobón",
+                cardProjectTitle: "🌍 À propos du projet",
                 cardProjectText:
-                    "Présentation générale des programmes éducatifs et solidaires.",
+                    "Vision, valeurs, personnes impliquées et évolution de l’initiative.",
                 cardExportsTitle: "📦 Exportations",
                 cardExportsText:
                     "Versions finales préparées pour la présentation ou l’envoi.",
@@ -1859,7 +1860,7 @@
                     "Candidature «Un jouet, une illusion»",
                 footerVersion: "Version actuelle : 2.0",
                 footerUpdated:
-                    "Dernière mise à jour : 18/07/2026",
+                    "Dernière mise à jour : 19/07/2026",
                 backToTop: "↑ Retour en haut",
                 languageChanged:
                     "La langue a été changée en français."
@@ -1917,9 +1918,9 @@
                 cardReferencesTitle: "📚 References",
                 cardReferencesText:
                     "Supporting documents on geography, education and childhood.",
-                cardProjectTitle: "🌍 Annobón Project",
+                cardProjectTitle: "🌍 About the project",
                 cardProjectText:
-                    "Overview of the educational and solidarity programmes.",
+                    "Vision, values, people involved and development of the initiative.",
                 cardExportsTitle: "📦 Exports",
                 cardExportsText:
                     "Final versions prepared for presentation or submission.",
@@ -1993,7 +1994,7 @@
                     "«A Toy, a Dream» application",
                 footerVersion: "Current version: 2.0",
                 footerUpdated:
-                    "Last update: 18/07/2026",
+                    "Last update: 19/07/2026",
                 backToTop: "↑ Back to top",
                 languageChanged:
                     "Language changed to English."
@@ -2003,6 +2004,10 @@
                 brandTitle: "مشروع أنوبون",
                 brandSubtitle: "لعبة وأمل",
                 menuButton: "القائمة",
+                navHome: "الرئيسية",
+                navApplication: "ملف الترشيح",
+                navAnnexes: "الملاحق",
+                navAbout: "حول المشروع",
                 navSummary: "الملخص",
                 navIndicators: "المؤشرات",
                 navNavigation: "التنقل",
@@ -2051,9 +2056,9 @@
                 cardReferencesTitle: "📚 المراجع",
                 cardReferencesText:
                     "وثائق داعمة حول الجغرافيا والتعليم والطفولة.",
-                cardProjectTitle: "🌍 مشروع أنوبون",
+                cardProjectTitle: "🌍 حول المشروع",
                 cardProjectText:
-                    "نظرة عامة على البرامج التعليمية والتضامنية.",
+                    "رؤية المشروع وقيمه والأشخاص المشاركون وتطوره.",
                 cardExportsTitle: "📦 النسخ النهائية",
                 cardExportsText:
                     "نسخ نهائية معدة للعرض أو الإرسال.",
@@ -2127,7 +2132,7 @@
                     "ملف مشروع «لعبة وأمل»",
                 footerVersion: "الإصدار الحالي: 2.0",
                 footerUpdated:
-                    "آخر تحديث: 18/07/2026",
+                    "آخر تحديث: 19/07/2026",
                 backToTop: "↑ العودة إلى الأعلى",
                 languageChanged:
                     "تم تغيير اللغة إلى العربية."
