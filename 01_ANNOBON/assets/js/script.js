@@ -6,31 +6,20 @@
   function initMobileMenu() {
     const toggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
-    const nav = document.querySelector('.nav');
 
     if (!toggle || !navLinks) {
       return;
     }
 
-    function closeMenu() {
-      navLinks.classList.remove('is-open');
-      if (nav) {
-        nav.classList.remove('open');
-      }
-      toggle.setAttribute('aria-expanded', 'false');
-    }
-
     toggle.addEventListener('click', function () {
       const isOpen = navLinks.classList.toggle('is-open');
-      if (nav) {
-        nav.classList.toggle('open', isOpen);
-      }
       toggle.setAttribute('aria-expanded', String(isOpen));
     });
 
     navLinks.querySelectorAll('a').forEach(function (link) {
       link.addEventListener('click', function () {
-        closeMenu();
+        navLinks.classList.remove('is-open');
+        toggle.setAttribute('aria-expanded', 'false');
       });
     });
   }
