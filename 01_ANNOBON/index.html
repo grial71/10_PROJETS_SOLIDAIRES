@@ -98,8 +98,8 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0.85rem 1.2rem;
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: minmax(220px, auto) minmax(0, 1fr);
             align-items: center;
             gap: 1rem;
         }
@@ -121,14 +121,18 @@
         }
 
         .nav-right {
-            display: flex;
+            min-width: 0;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
             align-items: center;
             gap: 0.75rem;
         }
 
         .nav-links {
+            min-width: 0;
             display: flex;
             align-items: center;
+            justify-content: flex-end;
             gap: 0.35rem;
             flex-wrap: wrap;
         }
@@ -151,10 +155,15 @@
             position: relative;
             display: flex;
             align-items: center;
+            justify-content: flex-end;
+            flex: 0 0 auto;
+            z-index: 2;
         }
 
         .language-select {
+            width: auto;
             min-width: 145px;
+            max-width: 180px;
             padding: 0.58rem 2rem 0.58rem 0.8rem;
             border: 1px solid var(--border);
             border-radius: 999px;
@@ -614,13 +623,50 @@
 
         @media (max-width: 1050px) {
             .nav {
-                align-items: flex-start;
-                flex-wrap: wrap;
+                grid-template-columns: minmax(0, 1fr);
+                align-items: center;
+            }
+
+            .brand {
+                min-width: 0;
             }
 
             .nav-right {
-                flex-wrap: wrap;
-                justify-content: flex-end;
+                width: 100%;
+                grid-template-columns: auto minmax(0, 1fr);
+                align-items: center;
+            }
+
+            .menu-toggle {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                grid-column: 1;
+                white-space: nowrap;
+            }
+
+            .language-wrapper {
+                grid-column: 2;
+                justify-self: end;
+            }
+
+            .nav-links {
+                display: none;
+                grid-column: 1 / -1;
+                width: 100%;
+                padding-top: 0.7rem;
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .nav.open .nav-links {
+                display: flex;
+            }
+
+            .nav-links a {
+                width: 100%;
+                padding: 0.7rem 0.8rem;
+                background: var(--surface-2);
             }
 
             .stats-grid {
@@ -655,47 +701,44 @@
 
         @media (max-width: 680px) {
             .nav {
-                align-items: center;
+                padding: 0.75rem 0.9rem;
+            }
+
+            .brand {
+                min-width: 0;
+                width: 100%;
+            }
+
+            .brand-logo {
+                width: 50px;
+                height: 50px;
+                flex-basis: 50px;
             }
 
             .nav-right {
-                width: 100%;
-                justify-content: space-between;
+                grid-template-columns: auto minmax(0, 1fr);
+                gap: 0.6rem;
             }
 
             .menu-toggle {
-                display: inline-block;
-            }
-
-            .nav-links {
-                display: none;
-                width: 100%;
-                padding-top: 0.7rem;
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .nav.open .nav-links {
-                display: flex;
-            }
-
-            .nav-links a {
-                width: 100%;
-                padding: 0.7rem 0.8rem;
-                background: var(--surface-2);
+                max-width: 120px;
             }
 
             .language-wrapper {
-                margin-left: auto;
-            }
-
-            body[dir="rtl"] .language-wrapper {
-                margin-left: 0;
-                margin-right: auto;
+                min-width: 0;
+                justify-self: stretch;
             }
 
             .language-select {
-                min-width: 130px;
+                width: 100%;
+                min-width: 0;
+                max-width: 190px;
+                margin-left: auto;
+            }
+
+            body[dir="rtl"] .language-select {
+                margin-left: 0;
+                margin-right: auto;
             }
 
             .container {
@@ -718,9 +761,42 @@
                 flex-direction: column;
                 gap: 0.2rem;
             }
+        }
 
+        @media (max-width: 420px) {
             .brand {
-                min-width: auto;
+                gap: 0.6rem;
+            }
+
+            .brand > div {
+                min-width: 0;
+            }
+
+            .brand [data-i18n="brandTitle"] {
+                font-size: 0.96rem;
+                line-height: 1.2;
+            }
+
+            .brand small {
+                font-size: 0.7rem;
+            }
+
+            .nav-right {
+                grid-template-columns: 1fr;
+            }
+
+            .menu-toggle,
+            .language-wrapper {
+                grid-column: 1;
+                width: 100%;
+            }
+
+            .menu-toggle {
+                max-width: none;
+            }
+
+            .language-select {
+                max-width: none;
             }
         }
 
@@ -841,6 +917,7 @@
                         id="languageSelect"
                         class="language-select"
                         aria-label="Seleccionar idioma"
+                        title="Traductor / Sélecteur de langue"
                     >
                         <option value="es">
                             🇪🇸 Español
@@ -1496,7 +1573,7 @@
         </p>
 
         <p data-i18n="footerUpdated">
-            Última actualización: 14/07/2026
+            Última actualización: 18/07/2026
         </p>
 
     </footer>
@@ -1648,7 +1725,7 @@
                     "Candidatura «Un Juguete, una Ilusión»",
                 footerVersion: "Versión actual: 2.0",
                 footerUpdated:
-                    "Última actualización: 14/07/2026",
+                    "Última actualización: 18/07/2026",
                 backToTop: "↑ Volver arriba",
                 languageChanged:
                     "Idioma cambiado a español."
@@ -1782,7 +1859,7 @@
                     "Candidature «Un jouet, une illusion»",
                 footerVersion: "Version actuelle : 2.0",
                 footerUpdated:
-                    "Dernière mise à jour : 14/07/2026",
+                    "Dernière mise à jour : 18/07/2026",
                 backToTop: "↑ Retour en haut",
                 languageChanged:
                     "La langue a été changée en français."
@@ -1916,7 +1993,7 @@
                     "«A Toy, a Dream» application",
                 footerVersion: "Current version: 2.0",
                 footerUpdated:
-                    "Last update: 14/07/2026",
+                    "Last update: 18/07/2026",
                 backToTop: "↑ Back to top",
                 languageChanged:
                     "Language changed to English."
@@ -2050,7 +2127,7 @@
                     "ملف مشروع «لعبة وأمل»",
                 footerVersion: "الإصدار الحالي: 2.0",
                 footerUpdated:
-                    "آخر تحديث: 14/07/2026",
+                    "آخر تحديث: 18/07/2026",
                 backToTop: "↑ العودة إلى الأعلى",
                 languageChanged:
                     "تم تغيير اللغة إلى العربية."
